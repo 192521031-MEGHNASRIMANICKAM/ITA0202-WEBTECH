@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightgray;
+        }
+
+        .form-box {
+            width: 350px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid darkblue;
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: darkblue;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #details {
+            margin-top: 20px;
+            font-weight: bold;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-box">
+
+        <h2>Student Registration</h2>
+
+        <label for="studentName">Student Name</label>
+        <input type="text"
+               id="studentName"
+               placeholder="Enter student name">
+
+        <label for="registerNumber">Register Number</label>
+        <input type="text"
+               id="registerNumber"
+               placeholder="Enter register number">
+
+        <label for="department">Department</label>
+        <select id="department">
+            <option value="">Select Department</option>
+            <option value="CSE">CSE</option>
+            <option value="AI">Artificial Intelligence</option>
+            <option value="ECE">ECE</option>
+        </select>
+
+        <button onclick="registerStudent()">
+            Register
+        </button>
+
+        <button type="button" onclick="resetForm()">
+            Reset
+        </button>
+
+        <p id="message"></p>
+
+        <div id="details"></div>
+
+    </div>
+
+    <script>
+
+        function resetForm() {
+
+            document.getElementById("studentName").value = "";
+            document.getElementById("registerNumber").value = "";
+            document.getElementById("department").value = "";
+
+            document.getElementById("message").textContent = "";
+            document.getElementById("details").innerHTML = "";
+
+            alert("Form has been reset!");
+        }
+
+        function registerStudent() {
+
+            const name = document.getElementById("studentName").value.trim();
+            const registerNumber = document.getElementById("registerNumber").value.trim();
+            const department = document.getElementById("department").value;
+            const message = document.getElementById("message");
+
+            // Empty field validation
+            if (name === "" || registerNumber === "" || department === "") {
+
+                alert("⚠ WARNING!\n\nPlease fill in all the fields.");
+
+                message.textContent = "Please fill in all the fields.";
+                message.style.color = "red";
+
+                return;
+            }
+
+            // Name validation
+            if (!/^[A-Za-z ]+$/.test(name)) {
+
+                alert("DATATYPE MISMATCH!\n\nStudent Name must contain ONLY alphabets.");
+
+                message.textContent = "Invalid Student Name.";
+                message.style.color = "red";
+
+                return;
+            }
+
+            // Register number validation
+            if (isNaN(registerNumber)) {
+
+                alert("DATATYPE MISMATCH!\n\nRegister Number must contain ONLY numbers.");
+
+                message.textContent = "Invalid Register Number.";
+                message.style.color = "red";
+
+                return;
+            }
+
+            // Generate Waiting ID
+            let waitingID = "W" + Math.floor(1000 + Math.random() * 9000);
+
+            alert("SUCCESS!\n\nStudent Registered Successfully.");
+
+            message.textContent = "Student registered successfully.";
+            message.style.color = "green";
+
+            // Display registration details
+            document.getElementById("details").innerHTML =
+                "<h3>Registration Details</h3>" +
+                "Student Name : " + name + "<br>" +
+                "Register Number : " + registerNumber + "<br>" +
+                "Department : " + department + "<br>" +
+                "Waiting ID : " + waitingID;
+        }
+
+    </script>
+
+</body>
+</html>
