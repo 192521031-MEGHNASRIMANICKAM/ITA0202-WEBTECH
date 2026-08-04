@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<students>
+
+    <student>
+        <rollnumber>23BIT001</rollnumber>
+        <name>Meghna Sri Manickam</name>
+        <department>Information Technology</department>
+        <year>Second Year</year>
+        <email>meghna@example.com</email>
+        <mobilenumber>9876543210</mobilenumber>
+    </student>
+
+    <student>
+        <rollnumber>23BIT002</rollnumber>
+        <name>Rahul Kumar</name>
+        <department>Computer Science</department>
+        <year>Second Year</year>
+        <email>rahul@example.com</email>
+        <mobilenumber>9876501234</mobilenumber>
+    </student>
+
+    <student>
+        <rollnumber>23BIT003</rollnumber>
+        <name>Ananya Sharma</name>
+        <department>Artificial Intelligence</department>
+        <year>Second Year</year>
+        <email>ananya@example.com</email>
+        <mobilenumber>9876512345</mobilenumber>
+    </student>
+
+</students>
