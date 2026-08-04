@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Quiz</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Online Quiz</h2>
+
+<form id="quizForm">
+
+<div class="card">
+
+<p>1. HTML stands for?</p>
+
+<input type="radio" name="q1" value="a"> Hyper Text Markup Language<br>
+<input type="radio" name="q1" value="b"> High Text Machine Language<br>
+<input type="radio" name="q1" value="c"> Home Tool Markup Language
+
+</div>
+
+<div class="card">
+
+<p>2. Which language is used for styling web pages?</p>
+
+<input type="radio" name="q2" value="a"> Python<br>
+<input type="radio" name="q2" value="b"> CSS<br>
+<input type="radio" name="q2" value="c"> Java
+
+</div>
+
+<div class="card">
+
+<p>3. Which keyword declares a variable in JavaScript?</p>
+
+<input type="radio" name="q3" value="a"> int<br>
+<input type="radio" name="q3" value="b"> var<br>
+<input type="radio" name="q3" value="c"> define
+
+</div>
+
+<div class="card">
+
+<p>4. Which HTML tag creates a hyperlink?</p>
+
+<input type="radio" name="q4" value="a"> &lt;img&gt;<br>
+<input type="radio" name="q4" value="b"> &lt;a&gt;<br>
+<input type="radio" name="q4" value="c"> &lt;table&gt;
+
+</div>
+
+<div class="card">
+
+<p>5. Which symbol is used for comments in CSS?</p>
+
+<input type="radio" name="q5" value="a"> // comment<br>
+<input type="radio" name="q5" value="b"> &lt;!-- --&gt;<br>
+<input type="radio" name="q5" value="c"> /* comment */
+
+</div>
+
+<button type="button" onclick="checkScore()">Submit Quiz</button>
+
+</form>
+
+<h3 id="result"></h3>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
