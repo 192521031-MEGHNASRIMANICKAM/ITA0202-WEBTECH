@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Shopping Cart</h2>
+
+<label>Product</label>
+
+<select id="product">
+<option value="500">Laptop Bag - ₹500</option>
+<option value="300">Mouse - ₹300</option>
+<option value="700">Keyboard - ₹700</option>
+<option value="1500">Headphones - ₹1500</option>
+</select>
+
+<label>Quantity</label>
+
+<input type="number" id="qty" min="1" value="1">
+
+<button onclick="generateBill()">Generate Bill</button>
+
+<table>
+
+<tr>
+<th>Product</th>
+<td id="pname"></td>
+</tr>
+
+<tr>
+<th>Price</th>
+<td id="price"></td>
+</tr>
+
+<tr>
+<th>Quantity</th>
+<td id="quantity"></td>
+</tr>
+
+<tr>
+<th>Subtotal</th>
+<td id="subtotal"></td>
+</tr>
+
+<tr>
+<th>Discount (10%)</th>
+<td id="discount"></td>
+</tr>
+
+<tr>
+<th>GST (18%)</th>
+<td id="gst"></td>
+</tr>
+
+<tr>
+<th>Total Bill</th>
+<td id="total"></td>
+</tr>
+
+</table>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
