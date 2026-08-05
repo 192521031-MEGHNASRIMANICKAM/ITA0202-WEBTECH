@@ -1,86 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Student Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f5ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+            color: darkblue;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #999;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            margin-top: 5px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1 align="center">Student Registration Form</h1>
-    <hr>
+<div class="container">
 
-    <form>
+<h2>Student Registration Form</h2>
 
-        <table align="center" cellpadding="8">
+<form>
 
-            <tr>
-                <td><b>Student Name</b></td>
-                <td><input type="text" placeholder="Enter your name"></td>
-            </tr>
+    <label>Student Name</label>
+    <input type="text" placeholder="Enter your name" required>
 
-            <tr>
-                <td><b>Roll Number</b></td>
-                <td><input type="text" placeholder="Enter roll number"></td>
-            </tr>
+    <label>Email</label>
+    <input type="email" placeholder="Enter your email" required>
 
-            <tr>
-                <td><b>Password</b></td>
-                <td><input type="password" placeholder="Enter password"></td>
-            </tr>
+    <label>Password</label>
+    <input type="password" placeholder="Enter password" required>
 
-            <tr>
-                <td><b>Email</b></td>
-                <td><input type="email" placeholder="Enter email"></td>
-            </tr>
+    <label>Gender</label>
+    <div class="radio-group">
+        <input type="radio" name="gender"> Male
+        <input type="radio" name="gender"> Female
+        <input type="radio" name="gender"> Other
+    </div>
 
-            <tr>
-                <td><b>Gender</b></td>
-                <td>
-                    <input type="radio" name="gender"> Male
-                    <input type="radio" name="gender"> Female
-                </td>
-            </tr>
+    <label>Courses Interested</label>
+    <div class="checkbox-group">
+        <input type="checkbox"> HTML
+        <input type="checkbox"> CSS
+        <input type="checkbox"> JavaScript
+    </div>
 
-            <tr>
-                <td><b>Hobbies</b></td>
-                <td>
-                    <input type="checkbox"> Reading
-                    <input type="checkbox"> Sports
-                    <input type="checkbox"> Music
-                </td>
-            </tr>
+    <label>Department</label>
+    <select>
+        <option>Select Department</option>
+        <option>Information Technology</option>
+        <option>Computer Science</option>
+        <option>Electronics</option>
+        <option>Mechanical</option>
+        <option>Civil</option>
+    </select>
 
-            <tr>
-                <td><b>Department</b></td>
-                <td>
-                    <select>
-                        <option>Select Department</option>
-                        <option>Information Technology</option>
-                        <option>Computer Science</option>
-                        <option>Electronics</option>
-                        <option>Mechanical</option>
-                        <option>Civil</option>
-                    </select>
-                </td>
-            </tr>
+    <label>Address</label>
+    <textarea rows="4" placeholder="Enter your address"></textarea>
 
-            <tr>
-                <td><b>Address</b></td>
-                <td>
-                    <textarea rows="4" cols="30" placeholder="Enter your address"></textarea>
-                </td>
-            </tr>
+    <div class="buttons">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </div>
 
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="Register">
-                    <input type="reset" value="Clear">
-                </td>
-            </tr>
+</form>
 
-        </table>
-
-    </form>
+</div>
 
 </body>
 </html>
