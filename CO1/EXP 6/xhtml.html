@@ -4,41 +4,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>XHTML Web Page</title>
+    <title>Explore Tamil Nadu</title>
+
+    <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
 <body>
 
-    <h1>Welcome to XHTML</h1>
+<div class="container">
 
-    <p>
-        XHTML stands for <strong>Extensible HyperText Markup Language</strong>.
-    </p>
+<h1>Explore Tamil Nadu</h1>
 
-    <p>
-        XHTML is stricter than HTML and follows XML rules.
-    </p>
+<p class="welcome">
+Welcome to the Tourism Portal of Tamil Nadu. Discover beautiful temples,
+hill stations, beaches, waterfalls and delicious cuisine.
+</p>
 
-    <hr />
+<img src="tamilnadu.jpg" alt="Tamil Nadu Tourism" width="450" height="250" />
 
-    <h2>Student Details</h2>
+<h2>Popular Tourist Places</h2>
 
-    <ul>
-        <li>Name: Meghna Sri Manickam</li>
-        <li>Department: Information Technology</li>
-        <li>Year: II Year</li>
-    </ul>
+<ul>
+    <li>Ooty</li>
+    <li>Kodaikanal</li>
+    <li>Mahabalipuram</li>
+    <li>Rameswaram</li>
+    <li>Kanyakumari</li>
+</ul>
 
-    <p>
-        Visit
-        <a href="https://www.w3schools.com">
-            W3Schools
-        </a>
-    </p>
+<h2>Tour Package Registration</h2>
 
-    <br />
+<form action="#" method="post">
 
-    <img src="student.jpg" alt="Student Image" width="200" height="200" />
+<label>Name:</label><br />
+<input type="text" name="name" /><br /><br />
+
+<label>Email:</label><br />
+<input type="email" name="email" /><br /><br />
+
+<label>Select Destination:</label><br />
+
+<select name="place">
+<option>Ooty</option>
+<option>Kodaikanal</option>
+<option>Mahabalipuram</option>
+<option>Rameswaram</option>
+<option>Kanyakumari</option>
+</select>
+
+<br /><br />
+
+<input type="submit" value="Book Now" />
+
+</form>
+
+<p>
+For more information visit
+<a href="https://www.tamilnadutourism.tn.gov.in">
+Tamil Nadu Tourism
+</a>.
+</p>
+
+</div>
 
 </body>
 
