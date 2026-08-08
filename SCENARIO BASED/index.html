@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+
+    <!-- Responsive viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Event Registration Portal</title>
+
+    <title>SIMATS University Event Registration Portal</title>
 
     <!-- External CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Internal CSS (Only for Hero Section) -->
+    <!-- =================================================
+         INTERNAL CSS
+         Internal CSS is used ONLY for the Hero Section
+    ================================================== -->
     <style>
         .hero {
-            background: linear-gradient(to right, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             color: white;
             text-align: center;
-            padding: 70px 20px;
+            padding: 75px 20px;
         }
 
         .hero h1 {
@@ -31,13 +38,18 @@
 
 <body>
 
-    <!-- Header -->
+    <!-- =================================================
+                        HEADER
+    ================================================== -->
+
     <header id="header">
+
         <div class="logo">
             <h2>SIMATS UNIVERSITY</h2>
+            <p>Event Registration Portal</p>
         </div>
 
-        <nav>
+        <nav aria-label="Main Navigation">
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#events">Events</a></li>
@@ -45,223 +57,422 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
+
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
 
-        <!-- Inline CSS Example -->
-        <h1 style="letter-spacing:2px;">
-            SIMATS Event Registration Portal
-        </h1>
+    <!-- =================================================
+                      HERO SECTION
+    ================================================== -->
 
-        <p>
-            Register now for Technical Workshops, Hackathons,
-            Cultural Fest, Sports Events and Placement Training.
-        </p>
+    <main>
 
-        <h3>Registration Open: 15 Aug - 30 Aug 2026</h3>
+        <section class="hero" id="home">
 
-        <a href="#register" class="btn">
-            Register Now
-        </a>
+            <!-- INLINE CSS
+                 Used on one small element only -->
+            <h1 style="letter-spacing: 2px;">
+                SIMATS Event Registration Portal
+            </h1>
 
-    </section>
+            <p>
+                Register for technical workshops, hackathons,
+                cultural events, sports and placement programmes.
+            </p>
 
-    <!-- Event Section -->
-    <section class="events" id="events">
+            <h3>
+                Registration Open: 15 August - 30 August 2026
+            </h3>
 
-        <h2 class="section-title">Upcoming Events</h2>
+            <a href="#register" class="btn">
+                Register Now
+            </a>
 
-        <div class="event-container">
+        </section>
 
-            <!-- Card 1 -->
-            <div class="card">
 
-                <span class="status">Open</span>
+        <!-- =================================================
+                       EVENT CATALOGUE
+        ================================================== -->
 
-                <h3>Hackathon 2026</h3>
+        <section class="events" id="events">
 
-                <p><strong>Category:</strong> Technical</p>
+            <h2 class="section-title">
+                Upcoming Events
+            </h2>
 
-                <p><strong>Date:</strong> 20 Aug 2026</p>
+            <div class="event-container">
 
-                <p><strong>Time:</strong> 9:00 AM</p>
 
-                <p><strong>Venue:</strong> Seminar Hall A</p>
+                <!-- ================= CARD 1 ================= -->
 
-                <p>
-                    Participate in a 24-hour coding competition
-                    and solve real-world problems.
-                </p>
+                <article class="card">
 
-                <button>Register</button>
+                    <span class="status">
+                        Open
+                    </span>
+
+                    <h3>
+                        Hackathon 2026
+                    </h3>
+
+                    <p>
+                        <strong>Category:</strong> Technical
+                    </p>
+
+                    <p>
+                        <strong>Date:</strong> 20 August 2026
+                    </p>
+
+                    <p>
+                        <strong>Time:</strong> 9:00 AM
+                    </p>
+
+                    <p>
+                        <strong>Venue:</strong> Seminar Hall A
+                    </p>
+
+                    <p>
+                        Participate in a 24-hour coding competition
+                        and solve real-world problems.
+                    </p>
+
+                    <button type="button">
+                        Register
+                    </button>
+
+                </article>
+
+
+                <!-- ================= CARD 2 ================= -->
+
+                <article class="card">
+
+                    <span class="status">
+                        Open
+                    </span>
+
+                    <h3>
+                        Cultural Fest
+                    </h3>
+
+                    <p>
+                        <strong>Category:</strong> Cultural
+                    </p>
+
+                    <p>
+                        <strong>Date:</strong> 25 August 2026
+                    </p>
+
+                    <p>
+                        <strong>Time:</strong> 10:00 AM
+                    </p>
+
+                    <p>
+                        <strong>Venue:</strong> Open Auditorium
+                    </p>
+
+                    <p>
+                        Enjoy dance, music, drama, singing and
+                        exciting cultural competitions.
+                    </p>
+
+                    <button type="button">
+                        Register
+                    </button>
+
+                </article>
+
+
+                <!-- ================= CARD 3 ================= -->
+
+                <article class="card">
+
+                    <span class="status limited">
+                        Limited Seats
+                    </span>
+
+                    <h3>
+                        Placement Training
+                    </h3>
+
+                    <p>
+                        <strong>Category:</strong> Placement
+                    </p>
+
+                    <p>
+                        <strong>Date:</strong> 28 August 2026
+                    </p>
+
+                    <p>
+                        <strong>Time:</strong> 1:30 PM
+                    </p>
+
+                    <p>
+                        <strong>Venue:</strong> Smart Classroom
+                    </p>
+
+                    <p>
+                        Resume building, aptitude training,
+                        coding interview preparation and HR sessions.
+                    </p>
+
+                    <button type="button">
+                        Register
+                    </button>
+
+                </article>
+
+
+                <!-- ================= CARD 4 ================= -->
+
+                <article class="card">
+
+                    <span class="status">
+                        Open
+                    </span>
+
+                    <h3>
+                        Sports Meet
+                    </h3>
+
+                    <p>
+                        <strong>Category:</strong> Sports
+                    </p>
+
+                    <p>
+                        <strong>Date:</strong> 30 August 2026
+                    </p>
+
+                    <p>
+                        <strong>Time:</strong> 8:00 AM
+                    </p>
+
+                    <p>
+                        <strong>Venue:</strong> University Ground
+                    </p>
+
+                    <p>
+                        Cricket, football, volleyball, athletics
+                        and indoor games.
+                    </p>
+
+                    <button type="button">
+                        Register
+                    </button>
+
+                </article>
 
             </div>
 
-            <!-- Card 2 -->
-            <div class="card">
+        </section>
 
-                <span class="status">Open</span>
 
-                <h3>Cultural Fest</h3>
+        <!-- =================================================
+                    REGISTRATION FORM
+        ================================================== -->
 
-                <p><strong>Category:</strong> Cultural</p>
+        <section class="register" id="register">
 
-                <p><strong>Date:</strong> 25 Aug 2026</p>
+            <h2 class="section-title">
+                Event Registration Form
+            </h2>
 
-                <p><strong>Time:</strong> 10:00 AM</p>
+            <form action="#" method="post">
 
-                <p><strong>Venue:</strong> Open Auditorium</p>
+                <div class="form-group">
 
-                <p>
-                    Dance, Music, Drama, Singing and
-                    exciting cultural competitions.
-                </p>
+                    <label for="name">
+                        Student Name
+                    </label>
 
-                <button>Register</button>
+                    <input
+                        type="text"
+                        id="name"
+                        name="student_name"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required>
 
-            </div>
+                </div>
 
-            <!-- Card 3 -->
-            <div class="card">
 
-                <span class="status">Limited Seats</span>
+                <div class="form-group">
 
-                <h3>Placement Training</h3>
+                    <label for="reg">
+                        Register Number
+                    </label>
 
-                <p><strong>Category:</strong> Placement</p>
+                    <input
+                        type="text"
+                        id="reg"
+                        name="register_number"
+                        placeholder="Enter register number"
+                        required>
 
-                <p><strong>Date:</strong> 28 Aug 2026</p>
+                </div>
 
-                <p><strong>Time:</strong> 1:30 PM</p>
 
-                <p><strong>Venue:</strong> Smart Classroom</p>
+                <div class="form-group">
 
-                <p>
-                    Resume building, aptitude training,
-                    coding interview preparation and HR session.
-                </p>
+                    <label for="dept">
+                        Department
+                    </label>
 
-                <button>Register</button>
+                    <select
+                        id="dept"
+                        name="department"
+                        required>
 
-            </div>
+                        <option value="">
+                            Select Department
+                        </option>
 
-            <!-- Card 4 -->
-            <div class="card">
+                        <option value="it">
+                            Information Technology
+                        </option>
 
-                <span class="status">Open</span>
+                        <option value="cse">
+                            Computer Science
+                        </option>
 
-                <h3>Sports Meet</h3>
+                        <option value="ai">
+                            Artificial Intelligence
+                        </option>
 
-                <p><strong>Category:</strong> Sports</p>
+                        <option value="ece">
+                            Electronics
+                        </option>
 
-                <p><strong>Date:</strong> 30 Aug 2026</p>
+                        <option value="mech">
+                            Mechanical
+                        </option>
 
-                <p><strong>Time:</strong> 8:00 AM</p>
+                    </select>
 
-                <p><strong>Venue:</strong> University Ground</p>
+                </div>
 
-                <p>
-                    Cricket, Football, Volleyball,
-                    Athletics and Indoor Games.
-                </p>
 
-                <button>Register</button>
+                <div class="form-group">
 
-            </div>
+                    <label for="email">
+                        Email Address
+                    </label>
 
-        </div>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your college email"
+                        autocomplete="email"
+                        required>
 
-    </section>
+                </div>
 
-    <!-- Registration Form -->
-    <section class="register" id="register">
 
-        <h2 class="section-title">
-            Event Registration Form
-        </h2>
+                <div class="form-group">
 
-        <form>
+                    <label for="event">
+                        Select Event
+                    </label>
 
-            <label for="name">Student Name</label>
-            <input
-                type="text"
-                id="name"
-                placeholder="Enter your name"
-                required>
+                    <select
+                        id="event"
+                        name="event"
+                        required>
 
-            <label for="reg">Register Number</label>
-            <input
-                type="text"
-                id="reg"
-                placeholder="Enter register number"
-                required>
+                        <option value="">
+                            Select an Event
+                        </option>
 
-            <label for="dept">Department</label>
-            <select id="dept">
+                        <option value="hackathon">
+                            Hackathon 2026
+                        </option>
 
-                <option>Information Technology</option>
-                <option>Computer Science</option>
-                <option>Artificial Intelligence</option>
-                <option>Electronics</option>
-                <option>Mechanical</option>
+                        <option value="cultural">
+                            Cultural Fest
+                        </option>
 
-            </select>
+                        <option value="placement">
+                            Placement Training
+                        </option>
 
-            <label for="email">Email</label>
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter Email"
-                required>
+                        <option value="sports">
+                            Sports Meet
+                        </option>
 
-            <label for="event">Select Event</label>
+                    </select>
 
-            <select id="event">
+                </div>
 
-                <option>Hackathon</option>
-                <option>Cultural Fest</option>
-                <option>Placement Training</option>
-                <option>Sports Meet</option>
 
-            </select>
+                <button
+                    type="submit"
+                    class="submit-btn">
 
-            <button type="submit" class="submit-btn">
-                Submit Registration
-            </button>
+                    Submit Registration
 
-        </form>
+                </button>
 
-    </section>
+            </form>
 
-    <!-- Fixed Help Button -->
-    <a href="#" class="help-btn">
+        </section>
+
+    </main>
+
+
+    <!-- =================================================
+                    FIXED HELP BUTTON
+    ================================================== -->
+
+    <a
+        href="#contact"
+        class="help-btn"
+        aria-label="Go to contact information">
+
         Help
+
     </a>
 
-    <!-- Footer -->
+
+    <!-- =================================================
+                         FOOTER
+    ================================================== -->
+
     <footer id="contact">
 
-        <h3>SIMATS University</h3>
-
-        <p>Email : events@abcuniversity.edu</p>
-
-        <p>Phone : +91 9876543210</p>
+        <h3>
+            SIMATS University
+        </h3>
 
         <p>
-            Useful Links :
-            <a href="#">About</a> |
-            <a href="#">Privacy Policy</a> |
-            <a href="#">Support</a>
+            Email:
+            <a href="mailto:events@simats.edu.in">
+                events@simats.edu.in
+            </a>
         </p>
 
         <p>
-            © 2026 SIMATS University.
+            Phone:
+            <a href="tel:+919876543210">
+                +91 9876543210
+            </a>
+        </p>
+
+        <p>
+            Useful Links:
+            <a href="#home">Home</a> |
+            <a href="#events">Events</a> |
+            <a href="#register">Register</a>
+        </p>
+
+        <p class="copyright">
+            &copy; 2026 SIMATS University.
             All Rights Reserved.
         </p>
 
     </footer>
 
 </body>
+
 </html>
