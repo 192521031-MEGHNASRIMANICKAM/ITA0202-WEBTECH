@@ -1,478 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Diego State University | Event Registration Portal</title>
 
-    <!-- Responsive viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- External stylesheet: primary design system for the whole site -->
+<link rel="stylesheet" href="style.css">
 
-    <title>SIMATS University Event Registration Portal</title>
+<!-- Google Fonts: display face for headings, humanist sans for body/UI -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- External CSS -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- =================================================
-         INTERNAL CSS
-         Internal CSS is used ONLY for the Hero Section
-    ================================================== -->
-    <style>
-        .hero {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            color: white;
-            text-align: center;
-            padding: 75px 20px;
-        }
-
-        .hero h1 {
-            font-size: 42px;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 25px;
-        }
-    </style>
+<!--
+  ============================================================
+  INTERNAL CSS — applies ONLY to the Registration section (#register).
+  Kept internal (in the document head, scoped to one section) to
+  satisfy the "internal CSS for one clearly identified section"
+  requirement. Everything else lives in the external style.css.
+  ============================================================
+-->
+<style>
+  /* Internal CSS: Registration section only */
+  #register {
+    background-color: #201b14;
+    background-image: radial-gradient(circle at 15% 20%, rgba(201,162,39,0.12), transparent 45%);
+  }
+  #register .section-eyebrow { color: #C9A227; }
+  #register .form-shell {
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+  }
+  #register .form-shell:focus-within {
+    border-color: #C9A227;
+  }
+</style>
 </head>
-
 <body>
 
-    <!-- =================================================
-                        HEADER
-    ================================================== -->
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <header id="header">
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">SD</span>
+      <div class="brand-text">
+        <p class="brand-university">San Diego State University</p>
+        <p class="brand-portal">Campus Event Registration Portal</p>
+      </div>
+    </div>
 
-        <div class="logo">
-            <h2>SIMATS UNIVERSITY</h2>
-            <p>Event Registration Portal</p>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
+    <label for="nav-toggle" class="nav-toggle-label" aria-label="Open navigation menu">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="#top" class="active" aria-current="page">Home</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#footer">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="section-eyebrow">Fall Engagement Season · Oct 6 – Nov 14, 2026</p>
+        <h1>Register for SDSU's <em>biggest</em> season of events yet.</h1>
+        <p class="hero-lede">
+          Hackathons, technical workshops, placement-training drives and campus
+          culture nights — one portal to browse every event and reserve your seat.
+          <!-- Inline CSS: demonstrated on this one small element only -->
+          <span style="color:#C9A227; font-weight:600;">Seats are limited per session.</span>
+        </p>
+        <div class="hero-actions">
+          <a href="#events" class="btn btn-primary">Browse Events</a>
+          <a href="#register" class="btn btn-ghost">Quick Register</a>
+        </div>
+        <dl class="hero-stats">
+          <div><dt>42</dt><dd>Events live</dd></div>
+          <div><dt>6</dt><dd>Weeks</dd></div>
+          <div><dt>4</dt><dd>Categories</dd></div>
+        </dl>
+      </div>
+
+      <figure class="hero-photo-frame">
+        <!--
+          Save your campus photo as: images/hepner-hall.jpg
+          (see the note beneath this file for sizing + source guidance)
+        -->
+        <img
+          src="college.jpg"
+          alt="Hepner Hall, the Mission Revival-style landmark building at the entrance of San Diego State University's campus"
+          class="hero-photo"
+          width="640" height="760"
+          onerror="this.closest('figure').classList.add('img-missing')">
+        <figcaption>Hepner Hall — the historic gateway to the SDSU campus</figcaption>
+      </figure>
+    </div>
+    <div class="step-divider" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============ EVENT CATALOGUE ============ -->
+  <section class="catalogue" id="events">
+    <div class="wrap">
+      <p class="section-eyebrow">Event Catalogue</p>
+      <h2 class="section-title">Four categories. One campus. Pick your track.</h2>
+
+      <div class="card-grid">
+
+        <!-- Card 1: Technical -->
+        <article class="event-card" data-category="technical">
+          <span class="status-badge status-open">Open</span>
+          <div class="card-media card-media--technical" aria-hidden="true"></div>
+          <div class="card-body">
+            <p class="card-category">Technical</p>
+            <h3 class="card-title">Aztec Hack 2026</h3>
+            <ul class="card-meta">
+              <li><strong>When:</strong> Oct 18, 9:00 AM – Oct 19, 6:00 PM</li>
+              <li><strong>Where:</strong> Zura Hall Innovation Lab</li>
+            </ul>
+            <p class="card-desc">24-hour build sprint for student teams tackling real campus-sustainability problems. Mentors from local startups on site.</p>
+            <a href="#register" class="btn btn-card">Register for Aztec Hack</a>
+          </div>
+        </article>
+
+        <!-- Card 2: Cultural -->
+        <article class="event-card" data-category="cultural">
+          <span class="status-badge status-few">Few seats</span>
+          <div class="card-media card-media--cultural" aria-hidden="true"></div>
+          <div class="card-body">
+            <p class="card-category">Cultural</p>
+            <h3 class="card-title">Noches Aztecas: Fall Culture Night</h3>
+            <ul class="card-meta">
+              <li><strong>When:</strong> Oct 24, 6:30 PM – 9:30 PM</li>
+              <li><strong>Where:</strong> Aztec Student Union, Montezuma Hall</li>
+            </ul>
+            <p class="card-desc">An evening of student performances, food from campus cultural clubs, and a showcase of SDSU's heritage organizations.</p>
+            <a href="#register" class="btn btn-card">Register for Culture Night</a>
+          </div>
+        </article>
+
+        <!-- Card 3: Placement -->
+        <article class="event-card" data-category="placement">
+          <span class="status-badge status-open">Open</span>
+          <div class="card-media card-media--placement" aria-hidden="true"></div>
+          <div class="card-body">
+            <p class="card-category">Placement Training</p>
+            <h3 class="card-title">Resume &amp; Systems-Design Bootcamp</h3>
+            <ul class="card-meta">
+              <li><strong>When:</strong> Nov 3 – Nov 5, 4:00 PM – 6:00 PM</li>
+              <li><strong>Where:</strong> Career Services, Suite 220</li>
+            </ul>
+            <p class="card-desc">Three evenings of mock interviews, resume clinics and systems-design practice with SDSU alumni recruiters.</p>
+            <a href="#register" class="btn btn-card">Register for Bootcamp</a>
+          </div>
+        </article>
+
+        <!-- Card 4: Sports -->
+        <article class="event-card" data-category="sports">
+          <span class="status-badge status-closed">Waitlist</span>
+          <div class="card-media card-media--sports" aria-hidden="true"></div>
+          <div class="card-body">
+            <p class="card-category">Sports</p>
+            <h3 class="card-title">Intramural Aztec 5-a-Side Cup</h3>
+            <ul class="card-meta">
+              <li><strong>When:</strong> Nov 14, 8:00 AM – 4:00 PM</li>
+              <li><strong>Where:</strong> ENS 700 Field</li>
+            </ul>
+            <p class="card-desc">Campus-wide five-a-side football tournament. Register a team of 6–8; waitlist opens for the next open slot.</p>
+            <a href="#register" class="btn btn-card">Join Waitlist</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REGISTRATION FORM (internal CSS scoped here) ============ -->
+  <section class="register" id="register">
+    <div class="wrap register-inner">
+      <div class="register-intro">
+        <p class="section-eyebrow">Registration</p>
+        <h2 class="section-title section-title--light">Reserve your seat</h2>
+        <p class="register-copy">
+          One form covers every event on this page. Pick your session below —
+          confirmation is sent to your SDSU email within 24 hours.
+        </p>
+      </div>
+
+      <form class="form-shell" action="#" method="post" novalidate>
+        <div class="form-row">
+          <label for="student-name">Full name</label>
+          <input type="text" id="student-name" name="studentName" placeholder="Aztec Montezuma" required>
         </div>
 
-        <nav aria-label="Main Navigation">
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="#register">Register</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-
-    </header>
-
-
-    <!-- =================================================
-                      HERO SECTION
-    ================================================== -->
-
-    <main>
-
-        <section class="hero" id="home">
-
-            <!-- INLINE CSS
-                 Used on one small element only -->
-            <h1 style="letter-spacing: 2px;">
-                SIMATS Event Registration Portal
-            </h1>
-
-            <p>
-                Register for technical workshops, hackathons,
-                cultural events, sports and placement programmes.
-            </p>
-
-            <h3>
-                Registration Open: 15 August - 30 August 2026
-            </h3>
-
-            <a href="#register" class="btn">
-                Register Now
-            </a>
-
-        </section>
-
-
-        <!-- =================================================
-                       EVENT CATALOGUE
-        ================================================== -->
-
-        <section class="events" id="events">
-
-            <h2 class="section-title">
-                Upcoming Events
-            </h2>
-
-            <div class="event-container">
-
-
-                <!-- ================= CARD 1 ================= -->
-
-                <article class="card">
-
-                    <span class="status">
-                        Open
-                    </span>
-
-                    <h3>
-                        Hackathon 2026
-                    </h3>
-
-                    <p>
-                        <strong>Category:</strong> Technical
-                    </p>
-
-                    <p>
-                        <strong>Date:</strong> 20 August 2026
-                    </p>
-
-                    <p>
-                        <strong>Time:</strong> 9:00 AM
-                    </p>
-
-                    <p>
-                        <strong>Venue:</strong> Seminar Hall A
-                    </p>
-
-                    <p>
-                        Participate in a 24-hour coding competition
-                        and solve real-world problems.
-                    </p>
-
-                    <button type="button">
-                        Register
-                    </button>
-
-                </article>
-
-
-                <!-- ================= CARD 2 ================= -->
-
-                <article class="card">
-
-                    <span class="status">
-                        Open
-                    </span>
-
-                    <h3>
-                        Cultural Fest
-                    </h3>
-
-                    <p>
-                        <strong>Category:</strong> Cultural
-                    </p>
-
-                    <p>
-                        <strong>Date:</strong> 25 August 2026
-                    </p>
-
-                    <p>
-                        <strong>Time:</strong> 10:00 AM
-                    </p>
-
-                    <p>
-                        <strong>Venue:</strong> Open Auditorium
-                    </p>
-
-                    <p>
-                        Enjoy dance, music, drama, singing and
-                        exciting cultural competitions.
-                    </p>
-
-                    <button type="button">
-                        Register
-                    </button>
-
-                </article>
-
-
-                <!-- ================= CARD 3 ================= -->
-
-                <article class="card">
-
-                    <span class="status limited">
-                        Limited Seats
-                    </span>
-
-                    <h3>
-                        Placement Training
-                    </h3>
-
-                    <p>
-                        <strong>Category:</strong> Placement
-                    </p>
-
-                    <p>
-                        <strong>Date:</strong> 28 August 2026
-                    </p>
-
-                    <p>
-                        <strong>Time:</strong> 1:30 PM
-                    </p>
-
-                    <p>
-                        <strong>Venue:</strong> Smart Classroom
-                    </p>
-
-                    <p>
-                        Resume building, aptitude training,
-                        coding interview preparation and HR sessions.
-                    </p>
-
-                    <button type="button">
-                        Register
-                    </button>
-
-                </article>
-
-
-                <!-- ================= CARD 4 ================= -->
-
-                <article class="card">
-
-                    <span class="status">
-                        Open
-                    </span>
-
-                    <h3>
-                        Sports Meet
-                    </h3>
-
-                    <p>
-                        <strong>Category:</strong> Sports
-                    </p>
-
-                    <p>
-                        <strong>Date:</strong> 30 August 2026
-                    </p>
-
-                    <p>
-                        <strong>Time:</strong> 8:00 AM
-                    </p>
-
-                    <p>
-                        <strong>Venue:</strong> University Ground
-                    </p>
-
-                    <p>
-                        Cricket, football, volleyball, athletics
-                        and indoor games.
-                    </p>
-
-                    <button type="button">
-                        Register
-                    </button>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-                    REGISTRATION FORM
-        ================================================== -->
-
-        <section class="register" id="register">
-
-            <h2 class="section-title">
-                Event Registration Form
-            </h2>
-
-            <form action="#" method="post">
-
-                <div class="form-group">
-
-                    <label for="name">
-                        Student Name
-                    </label>
-
-                    <input
-                        type="text"
-                        id="name"
-                        name="student_name"
-                        placeholder="Enter your full name"
-                        autocomplete="name"
-                        required>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="reg">
-                        Register Number
-                    </label>
-
-                    <input
-                        type="text"
-                        id="reg"
-                        name="register_number"
-                        placeholder="Enter register number"
-                        required>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="dept">
-                        Department
-                    </label>
-
-                    <select
-                        id="dept"
-                        name="department"
-                        required>
-
-                        <option value="">
-                            Select Department
-                        </option>
-
-                        <option value="it">
-                            Information Technology
-                        </option>
-
-                        <option value="cse">
-                            Computer Science
-                        </option>
-
-                        <option value="ai">
-                            Artificial Intelligence
-                        </option>
-
-                        <option value="ece">
-                            Electronics
-                        </option>
-
-                        <option value="mech">
-                            Mechanical
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="email">
-                        Email Address
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your college email"
-                        autocomplete="email"
-                        required>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="event">
-                        Select Event
-                    </label>
-
-                    <select
-                        id="event"
-                        name="event"
-                        required>
-
-                        <option value="">
-                            Select an Event
-                        </option>
-
-                        <option value="hackathon">
-                            Hackathon 2026
-                        </option>
-
-                        <option value="cultural">
-                            Cultural Fest
-                        </option>
-
-                        <option value="placement">
-                            Placement Training
-                        </option>
-
-                        <option value="sports">
-                            Sports Meet
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="submit-btn">
-
-                    Submit Registration
-
-                </button>
-
-            </form>
-
-        </section>
-
-    </main>
-
-
-    <!-- =================================================
-                    FIXED HELP BUTTON
-    ================================================== -->
-
-    <a
-        href="#contact"
-        class="help-btn"
-        aria-label="Go to contact information">
-
-        Help
-
-    </a>
-
-
-    <!-- =================================================
-                         FOOTER
-    ================================================== -->
-
-    <footer id="contact">
-
-        <h3>
-            SIMATS University
-        </h3>
-
-        <p>
-            Email:
-            <a href="mailto:events@simats.edu.in">
-                events@simats.edu.in
-            </a>
-        </p>
-
-        <p>
-            Phone:
-            <a href="tel:+919876543210">
-                +91 9876543210
-            </a>
-        </p>
-
-        <p>
-            Useful Links:
-            <a href="#home">Home</a> |
-            <a href="#events">Events</a> |
-            <a href="#register">Register</a>
-        </p>
-
-        <p class="copyright">
-            &copy; 2026 SIMATS University.
-            All Rights Reserved.
-        </p>
-
-    </footer>
+        <div class="form-row">
+          <label for="reg-number">Register number</label>
+          <input type="text" id="reg-number" name="registerNumber" placeholder="e.g. SDSU2026048" required>
+        </div>
+
+        <div class="form-row">
+          <label for="department">Department</label>
+          <select id="department" name="department" required>
+            <option value="" disabled selected>Select your department</option>
+            <option value="cs">Computer Science</option>
+            <option value="business">Fowler College of Business</option>
+            <option value="engineering">Engineering</option>
+            <option value="arts">Arts &amp; Letters</option>
+            <option value="health">Health &amp; Human Services</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="email">SDSU email address</label>
+          <input type="email" id="email" name="email" placeholder="you@sdsu.edu" required>
+        </div>
+
+        <fieldset class="form-row form-row--full">
+          <legend>Select event(s)</legend>
+          <div class="checkbox-grid">
+            <label class="checkbox-pill"><input type="checkbox" name="events" value="aztec-hack"> Aztec Hack 2026</label>
+            <label class="checkbox-pill"><input type="checkbox" name="events" value="culture-night"> Noches Aztecas</label>
+            <label class="checkbox-pill"><input type="checkbox" name="events" value="bootcamp"> Resume Bootcamp</label>
+            <label class="checkbox-pill"><input type="checkbox" name="events" value="5-a-side"> 5-a-Side Cup</label>
+          </div>
+        </fieldset>
+
+        <div class="form-row form-row--full">
+          <button type="submit" class="btn btn-primary btn-submit">Submit Registration</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer" id="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-col">
+      <p class="brand-university footer-brand">San Diego State University</p>
+      <p class="footer-tagline">Events &amp; Student Engagement Office</p>
+      <address>
+        5500 Campanile Drive, San Diego, CA 92182<br>
+        <a href="mailto:events@sdsu.edu">events@sdsu.edu</a> · (619) 555-0148
+      </address>
+    </div>
+
+    <div class="footer-col">
+      <h4>Useful links</h4>
+      <ul class="footer-links">
+        <li><a href="#events">Event catalogue</a></li>
+        <li><a href="#register">Registration form</a></li>
+        <li><a href="#top">Back to top</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Campus offices</h4>
+      <ul class="footer-links">
+        <li><a href="#footer">Career Services</a></li>
+        <li><a href="#footer">Student Life &amp; Leadership</a></li>
+        <li><a href="#footer">IT Help Desk</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="copyright">&copy; 2026 San Diego State University. All rights reserved.</p>
+</footer>
+
+<!-- Fixed help button — demonstrates position: fixed, beyond normal flow -->
+<a href="#register" class="help-btn" aria-label="Jump to registration form">?</a>
 
 </body>
-
 </html>
