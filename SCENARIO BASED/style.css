@@ -1,1151 +1,600 @@
-/*========================================================
-        RESPONSIVE UNIVERSITY EVENT REGISTRATION PORTAL
-        EXTERNAL CSS
-========================================================*/
+/* ============================================================
+   SDSU EVENT REGISTRATION PORTAL — EXTERNAL STYLESHEET
+   This is the primary, external CSS method used for the site
+   (see technical-note.md for justification of this choice).
+   Organised as:
+     1. Custom properties / tokens
+     2. Reset & base (element selectors)
+     3. Layout helpers
+     4. Header & nav          (sticky positioning)
+     5. Hero                  (gradient, clip-path, image frame)
+     6. Step divider           (signature Aztec step motif)
+     7. Event catalogue        (Grid, box model, absolute badges)
+     8. Registration form      (external base; internal CSS layers on top)
+     9. Footer + fixed help button
+    10. Responsive media queries
+   ============================================================ */
 
-
-/*========================================================
-                    1. RESET
-========================================================*/
-
-/*
-   border-box is used for the overall website so that
-   padding and borders are included in element dimensions.
-*/
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    font-family:
-        'Segoe UI',
-        Tahoma,
-        Geneva,
-        Verdana,
-        sans-serif;
+/* ---------- 1. Tokens ---------- */
+:root {
+  --red: #A6192E;
+  --red-dark: #7A1122;
+  --ink: #18140F;
+  --sand: #E9E2D0;
+  --paper: #FBF8F2;
+  --turquoise: #1F7A73;
+  --gold: #C9A227;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --shadow-card: 0 18px 40px rgba(24, 20, 15, 0.14);
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Source Sans 3', sans-serif;
+  --max-width: 1180px;
 }
 
-
-/* Element selector */
+/* ---------- 2. Reset & base (element selectors) ---------- */
+* ,
+*::before,
+*::after {
+  box-sizing: border-box; /* global border-box; the event-card width
+                              calculation is documented for the DEFAULT
+                              content-box model in technical-note.md */
+  margin: 0;
+  padding: 0;
+}
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
-
-
-/* Element selector */
 
 body {
-    background-color: #ffe6f2;
-    color: #333333;
-    line-height: 1.6;
-    overflow-x: hidden;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+  overflow-x: hidden; /* guarantees no horizontal scroll on mobile */
 }
 
+img { max-width: 100%; display: block; }
 
-/* Group selector */
-
-h1,
-h2,
-h3 {
-    line-height: 1.2;
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
 }
 
+/* Group selector: shared list reset */
+ul, ol { list-style: none; }
 
-/*========================================================
-                    2. HEADER
-========================================================*/
+a { color: inherit; text-decoration: none; }
 
-
-/* ID selector */
-
-#header {
-    background: linear-gradient(
-        90deg,
-        #11998e,
-        #38ef7d
-    );
-
-    color: white;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 18px 50px;
-
-    /* Sticky positioning */
-    position: sticky;
-    top: 0;
-
-    /* z-index */
-    z-index: 1000;
-
-    box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.20);
+/* Pseudo-class: visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.nav-toggle-label:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
 }
 
-
-/* Class selector */
-
-.logo {
-    text-align: left;
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 12px 20px;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
 }
 
-
-/* Descendant selector */
-
-.logo h2 {
-    font-size: 28px;
-    letter-spacing: 1px;
-
-    text-shadow:
-        2px 2px 4px rgba(0, 0, 0, 0.30);
-
-    transition: transform 0.3s ease;
+/* ---------- 3. Layout helpers ---------- */
+.wrap {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: 24px;
 }
 
-
-/* Pseudo-class */
-
-.logo h2:hover {
-    transform: scale(1.04);
+.section-eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  color: var(--red);
+  margin-bottom: 10px;
 }
-
-
-/* Descendant selector */
-
-.logo p {
-    font-size: 14px;
-    margin-top: 3px;
-    opacity: 0.9;
-}
-
-
-/*========================================================
-                    3. NAVIGATION
-========================================================*/
-
-
-.nav-links {
-    list-style: none;
-
-    display: flex;
-    gap: 15px;
-}
-
-
-/* Child selector */
-
-.nav-links > li {
-    display: inline-block;
-}
-
-
-/* Descendant selector */
-
-.nav-links a {
-    text-decoration: none;
-    color: white;
-
-    font-weight: 600;
-
-    padding: 10px 17px;
-
-    border-radius: 25px;
-
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease,
-        transform 0.3s ease;
-}
-
-
-/* Pseudo-class */
-
-.nav-links a:hover {
-    background-color: white;
-    color: #003366;
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 5px 15px rgba(255, 255, 255, 0.4);
-}
-
-
-/* Keyboard accessibility */
-
-.nav-links a:focus {
-    outline: 3px solid #ffd54f;
-    outline-offset: 3px;
-}
-
-
-/*========================================================
-                    4. HERO SECTION
-========================================================*/
-
-/*
-   NOTE:
-   The main Hero background, text alignment and spacing
-   are intentionally written in INTERNAL CSS in index.html.
-*/
-
-
-.hero h3 {
-    margin-bottom: 30px;
-    color: #fffde7;
-}
-
-
-/* Class selector */
-
-.btn {
-    display: inline-block;
-
-    padding: 14px 34px;
-
-    background-color: white;
-    color: #003366;
-
-    border-radius: 40px;
-
-    text-decoration: none;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.3s ease,
-        background-color 0.3s ease,
-        color 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-
-/* Hover */
-
-.btn:hover {
-    background-color: #003366;
-    color: white;
-
-    transform: scale(1.08);
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.30);
-}
-
-
-/* Focus */
-
-.btn:focus {
-    outline: 3px solid #ffd54f;
-    outline-offset: 4px;
-}
-
-
-/*========================================================
-                5. SECTION TITLE
-========================================================*/
-
 
 .section-title {
-    text-align: center;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  margin-bottom: 40px;
+  max-width: 720px;
+}
+.section-title--light { color: var(--paper); }
 
-    margin: 55px 0 35px;
-
-    font-size: 32px;
-
-    color: #003366;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.btn-primary {
+  background: var(--red);
+  color: var(--paper);
+  box-shadow: 0 10px 24px rgba(166, 25, 46, 0.35);
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--red-dark);
+  transform: translateY(-2px);
+}
+.btn-ghost {
+  background: transparent;
+  border-color: rgba(24,20,15,0.25);
+  color: var(--ink);
+}
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  border-color: var(--ink);
+  transform: translateY(-2px);
 }
 
-
-/* Pseudo-element */
-
-.section-title::after {
-    content: "";
-
-    display: block;
-
-    width: 90px;
-    height: 5px;
-
-    margin: 12px auto;
-
-    border-radius: 5px;
-
-    background: linear-gradient(
-        to right,
-        #0066ff,
-        #00c6ff
-    );
+/* ---------- 4. Header & nav ---------- */
+.site-header {
+  position: sticky; /* beyond-normal-flow technique #1 */
+  top: 0;
+  z-index: 50;
+  background: rgba(251, 248, 242, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(24,20,15,0.08);
 }
 
-
-/*========================================================
-                6. EVENT SECTION
-========================================================*/
-
-
-.events {
-    padding: 20px;
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 14px;
 }
 
+.brand { display: flex; align-items: center; gap: 12px; }
 
-/* Flexbox primary layout */
-
-.event-container {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: stretch;
-
-    gap: 25px;
-
-    flex-wrap: wrap;
-
-    max-width: 1300px;
-
-    margin: 0 auto;
+.brand-mark {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  background: var(--red);
+  color: var(--paper);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 700;
 }
 
-
-/*========================================================
-                    7. EVENT CARD
-========================================================*/
-
-
-.card {
-
-    /*
-       Relative positioning allows the status badge
-       to be positioned relative to this card.
-    */
-
-    position: relative;
-
-    width: 290px;
-
-    background-color: white;
-
-    /*
-       IMPORTANT:
-       content-box is intentionally used here so that
-       the box-model calculation can be demonstrated.
-    */
-
-    box-sizing: content-box;
-
-    padding: 22px;
-
-    border: 2px solid #dfe8f3;
-
-    margin: 10px;
-
-    border-radius: 18px;
-
-    /*
-       Prevents the decorative line/badge from escaping.
-    */
-
-    overflow: hidden;
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.12);
-
-    transition:
-        transform 0.4s ease,
-        box-shadow 0.4s ease;
+.brand-university {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.brand-portal {
+  font-size: 0.78rem;
+  color: #5c564a;
 }
 
-
-/*
-   CHILD SELECTOR
-
-   Direct h3 children of .card
-*/
-
-.card > h3 {
-    color: #003366;
-
-    margin: 18px 0;
-
-    font-size: 21px;
+/* Descendant selector */
+.site-nav .nav-list {
+  display: flex;
+  gap: 28px;
 }
 
-
-/*
-   DESCENDANT SELECTOR
-
-   Any paragraph inside .card
-*/
-
-.card p {
-    margin: 8px 0;
-
-    color: #555555;
-
-    font-size: 14px;
+/* Child selector */
+.nav-list > li > a {
+  position: relative;
+  font-weight: 600;
+  padding-block: 6px;
 }
 
-
-/*
-   PSEUDO-ELEMENT
-
-   Decorative line at the top of every card
-*/
-
-.card::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 6px;
-
-    background: linear-gradient(
-        90deg,
-        #0077ff,
-        #00d4ff
-    );
+/* Pseudo-element used for the active/hover underline */
+.nav-list > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background: var(--red);
+  transition: width 0.25s ease;
+}
+.nav-list > li > a:hover::after,
+.nav-list > li > a.active::after {
+  width: 100%;
 }
 
+.nav-toggle,
+.nav-toggle-label { display: none; }
 
-/*
-   PSEUDO-CLASS
-
-   Card hover animation
-*/
-
-.card:hover {
-    transform:
-        translateY(-10px)
-        scale(1.02);
-
-    box-shadow:
-        0 20px 35px rgba(0, 0, 0, 0.22);
+/* ---------- 5. Hero ---------- */
+.hero {
+  position: relative;
+  background: linear-gradient(160deg, var(--sand) 0%, #f2ead7 55%, var(--paper) 100%);
+  overflow: hidden;
 }
 
-
-/*========================================================
-                8. STATUS BADGE
-========================================================*/
-
-
-.status {
-
-    /*
-       Absolute positioning
-    */
-
-    position: absolute;
-
-    top: 15px;
-    right: 15px;
-
-    background-color: #28a745;
-
-    color: white;
-
-    padding: 6px 13px;
-
-    border-radius: 25px;
-
-    font-size: 11px;
-
-    font-weight: bold;
-
-    box-shadow:
-        0 5px 12px rgba(0, 0, 0, 0.20);
-
-    z-index: 2;
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: center;
+  padding-block: 64px 90px;
 }
 
-
-/* Different status appearance */
-
-.status.limited {
-    background-color: #e67e22;
+.hero-copy h1 {
+  font-size: clamp(2.1rem, 4.2vw, 3.4rem);
+  margin-block: 6px 20px;
+  text-shadow: 0 2px 0 rgba(255,255,255,0.4);
+}
+.hero-copy h1 em {
+  font-style: normal;
+  color: var(--red);
 }
 
-
-/*========================================================
-                9. EVENT BUTTON
-========================================================*/
-
-
-.card button {
-
-    width: 100%;
-
-    margin-top: 18px;
-
-    padding: 12px;
-
-    border: none;
-
-    border-radius: 30px;
-
-    background: linear-gradient(
-        90deg,
-        #0059b3,
-        #0099ff
-    );
-
-    color: white;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        background 0.3s ease;
+.hero-lede {
+  max-width: 46ch;
+  color: #3a352b;
+  margin-bottom: 28px;
 }
 
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 40px; }
 
-/* Hover */
+.hero-stats { display: flex; gap: 36px; }
+.hero-stats dt {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--red);
+}
+.hero-stats dd { font-size: 0.85rem; color: #5c564a; }
 
-.card button:hover {
-    background: linear-gradient(
-        90deg,
-        #003366,
-        #0077ff
-    );
-
-    transform: scale(1.04);
-
-    box-shadow:
-        0 8px 18px rgba(0, 0, 0, 0.20);
+.hero-photo-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden; /* clips the image to the frame */
+  box-shadow: var(--shadow-card);
+  /* Signature Aztec step-cut corner */
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 88% 100%, 0 100%);
+  background: var(--ink);
+}
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 5;
+  opacity: 0.97;
+}
+.hero-photo-frame figcaption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 16px 20px 40px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.75), transparent);
+  color: var(--paper);
+  font-size: 0.82rem;
+}
+/* Graceful fallback if images/hepner-hall.jpg hasn't been added yet */
+.hero-photo-frame.img-missing {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 60%, var(--ink) 100%);
+}
+.hero-photo-frame.img-missing .hero-photo { visibility: hidden; }
+.hero-photo-frame.img-missing::before {
+  content: "Add images/hepner-hall.jpg";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  font-family: var(--font-display);
+  text-align: center;
+  padding: 20px;
 }
 
-
-/* Focus */
-
-.card button:focus {
-    outline: 3px solid #ffd54f;
-    outline-offset: 3px;
+/* ---------- 6. Signature step divider (Aztec step-fret motif) ---------- */
+.step-divider {
+  height: 26px;
+  background-image:
+    linear-gradient(135deg, var(--red) 25%, transparent 25%),
+    linear-gradient(225deg, var(--red) 25%, transparent 25%),
+    linear-gradient(45deg, var(--red) 25%, transparent 25%),
+    linear-gradient(315deg, var(--red) 25%, transparent 25%);
+  background-position: 13px 0, 13px 0, 0 0, 0 0;
+  background-size: 26px 26px;
+  background-color: var(--ink);
 }
 
+/* ---------- 7. Event catalogue ---------- */
+.catalogue { padding-block: 80px; }
 
-/*========================================================
-                10. REGISTRATION FORM
-========================================================*/
-
-
-.register {
-
-    /*
-       max-width is one of the required visual properties.
-    */
-
-    max-width: 750px;
-
-    width: calc(100% - 40px);
-
-    margin: 60px auto;
-
-    background-color: white;
-
-    padding: 35px;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.15);
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
 }
 
-
-.register form {
-    display: flex;
-
-    flex-direction: column;
+.event-card {
+  position: relative; /* anchors the absolutely-positioned badge */
+  background: var(--paper);
+  border: 1px solid rgba(24,20,15,0.08);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  width: 300px;              /* content-box width used in the calculation */
+  max-width: 100%;
+  padding: 0 0 24px;
+  margin: 0 auto;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.event-card:hover,
+.event-card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 50px rgba(24,20,15,0.22);
 }
 
+/* Attribute selector: style cards by their data-category value */
+.event-card[data-category="technical"]  .card-category { color: var(--turquoise); }
+.event-card[data-category="cultural"]   .card-category { color: var(--gold); }
+.event-card[data-category="placement"]  .card-category { color: var(--red); }
+.event-card[data-category="sports"]     .card-category { color: var(--ink); }
 
-/* Form group */
+.status-badge {
+  position: absolute;                 /* beyond-normal-flow technique #2 */
+  top: 16px; right: 16px;
+  z-index: 5;                         /* sits above the card media */
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+}
+.status-open   { background: #1F7A73; color: #fff; }
+.status-few    { background: var(--gold); color: var(--ink); }
+.status-closed { background: #8a8375; color: #fff; }
 
-.form-group {
-    display: flex;
+.card-media {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+}
+.card-media--technical  { background: linear-gradient(135deg, #1F7A73, #123f3b); }
+.card-media--cultural   { background: linear-gradient(135deg, var(--gold), #8a6c15); }
+.card-media--placement  { background: linear-gradient(135deg, var(--red), var(--red-dark)); }
+.card-media--sports     { background: linear-gradient(135deg, #3a352b, var(--ink)); }
 
-    flex-direction: column;
+.card-body { padding: 20px 24px 0; }
+
+.card-category {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+.card-meta {
+  font-size: 0.86rem;
+  color: #4a453a;
+  margin-bottom: 12px;
+  display: grid;
+  gap: 4px;
+}
+.card-desc {
+  font-size: 0.9rem;
+  color: #4a453a;
+  margin-bottom: 20px;
 }
 
-
-/* Element selector */
-
-label {
-    margin-top: 15px;
-
-    margin-bottom: 8px;
-
-    font-weight: bold;
-
-    color: #003366;
+.btn-card {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.btn-card:hover,
+.btn-card:focus-visible {
+  background: var(--red);
+  transform: scale(1.02);
 }
 
+/* ---------- 8. Registration (external base — internal CSS in index.html
+   layers section-specific overrides on top of these rules) ---------- */
+.register { padding-block: 90px; color: var(--paper); }
 
-/*
-   ATTRIBUTE SELECTOR
+.register-inner {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 56px;
+  align-items: start;
+}
 
-   Demonstrates:
-   input[type="text"]
-   input[type="email"]
-*/
+.register-copy { color: #cfc8b8; max-width: 42ch; }
+
+.form-shell {
+  background: #2a231a;
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  transition: border-color 0.2s ease;
+}
+
+.form-row { display: flex; flex-direction: column; gap: 8px; }
+.form-row--full { grid-column: 1 / -1; }
+
+label, legend {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--sand);
+}
 
 input[type="text"],
 input[type="email"],
 select {
-
-    width: 100%;
-
-    padding: 14px;
-
-    border: 1px solid #cccccc;
-
-    border-radius: 10px;
-
-    font-size: 15px;
-
-    background-color: #fafafa;
-
-    transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease,
-        background-color 0.3s ease;
+  background: #FBF8F2;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  transition: box-shadow 0.2s ease;
 }
 
+/* Attribute selector: required fields get a visible cue */
+input[required] { border-left: 3px solid var(--red); }
 
-/*
-   ATTRIBUTE SELECTOR
-*/
+/* Pseudo-element: styled placeholder text */
+input::placeholder { color: #8a8375; }
 
-input[type="text"] {
-    cursor: text;
+input:hover, select:hover { box-shadow: 0 0 0 3px rgba(201,162,39,0.18); }
+input:focus, select:focus { box-shadow: 0 0 0 3px rgba(201,162,39,0.45); outline: none; }
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.checkbox-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #FBF8F2;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
+.btn-submit { width: 100%; padding: 16px; }
 
-/*
-   FOCUS PSEUDO-CLASS
-*/
-
-input:focus,
-select:focus {
-
-    border: 2px solid #0077ff;
-
-    box-shadow:
-        0 0 10px rgba(0, 119, 255, 0.25);
-
-    background-color: white;
-
-    outline: none;
+/* ---------- 9. Footer + fixed help button ---------- */
+.site-footer {
+  background: var(--ink);
+  color: var(--sand);
+  padding-block: 56px 28px;
 }
-
-
-/*========================================================
-                11. SUBMIT BUTTON
-========================================================*/
-
-
-.submit-btn {
-
-    margin-top: 25px;
-
-    padding: 14px;
-
-    border: none;
-
-    border-radius: 30px;
-
-    background: linear-gradient(
-        90deg,
-        #003366,
-        #0099ff
-    );
-
-    color: white;
-
-    font-size: 17px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
 }
+.footer-brand { color: var(--paper); margin-bottom: 6px; }
+.footer-tagline { color: #a49c8a; font-size: 0.85rem; margin-bottom: 14px; }
+address { font-style: normal; font-size: 0.88rem; line-height: 1.7; color: #cfc8b8; }
+address a:hover { color: var(--gold); }
 
-
-/* Hover */
-
-.submit-btn:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 10px 20px rgba(0, 0, 0, 0.20);
+.footer-col h4 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--paper);
+  margin-bottom: 14px;
 }
-
-
-/* Focus */
-
-.submit-btn:focus {
-
-    outline: 3px solid #ffd54f;
-
-    outline-offset: 3px;
-}
-
-
-/*========================================================
-                12. FIXED HELP BUTTON
-========================================================*/
-
-
-.help-btn {
-
-    /*
-       Fixed positioning
-    */
-
-    position: fixed;
-
-    bottom: 25px;
-    right: 25px;
-
-    background: linear-gradient(
-        135deg,
-        #ff9800,
-        #ff5722
-    );
-
-    color: white;
-
-    text-decoration: none;
-
-    padding: 14px 20px;
-
-    border-radius: 50px;
-
-    font-weight: bold;
-
-    box-shadow:
-        0 8px 18px rgba(0, 0, 0, 0.30);
-
-    transition:
-        transform 0.3s ease,
-        opacity 0.3s ease;
-
-    z-index: 999;
-
-    cursor: pointer;
-}
-
-
-/* Hover */
-
-.help-btn:hover {
-
-    transform: scale(1.1);
-
-    opacity: 0.9;
-}
-
-
-/* Focus */
-
-.help-btn:focus {
-
-    outline: 3px solid #ffd54f;
-
-    outline-offset: 3px;
-}
-
-
-/*========================================================
-                    13. FOOTER
-========================================================*/
-
-
-footer {
-
-    background: linear-gradient(
-        90deg,
-        #002147,
-        #003366
-    );
-
-    color: white;
-
-    text-align: center;
-
-    padding: 40px 20px;
-
-    margin-top: 60px;
-}
-
-
-footer h3 {
-
-    margin-bottom: 15px;
-
-    font-size: 24px;
-}
-
-
-footer p {
-
-    margin: 10px 0;
-}
-
-
-/*
-   DESCENDANT SELECTOR
-*/
-
-footer a {
-
-    color: #ffd54f;
-
-    text-decoration: none;
-
-    transition:
-        color 0.3s ease;
-}
-
-
-/* Hover */
-
-footer a:hover {
-
-    color: white;
-
-    text-decoration: underline;
-}
-
-
-/* Focus */
-
-footer a:focus {
-
-    outline: 2px solid #ffd54f;
-
-    outline-offset: 3px;
-}
-
+.footer-links li { margin-bottom: 10px; font-size: 0.88rem; }
+.footer-links a:hover { color: var(--gold); }
 
 .copyright {
-
-    opacity: 0.9;
-
-    font-size: 14px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #8a8375;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 24px;
 }
 
+.help-btn {
+  position: fixed;               /* beyond-normal-flow technique #3 */
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--red);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  box-shadow: 0 12px 26px rgba(166,25,46,0.4);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.help-btn:hover,
+.help-btn:focus-visible { background: var(--red-dark); transform: scale(1.08); }
 
-/*========================================================
-                14. RESPONSIVE DESIGN
-                TABLET / MOBILE
-========================================================*/
-
-
-@media screen and (max-width: 768px) {
-
-    /*
-       Header changes from horizontal
-       to vertical layout.
-    */
-
-    #header {
-
-        flex-direction: column;
-
-        padding: 20px;
-
-        gap: 15px;
-    }
-
-
-    .logo {
-
-        text-align: center;
-    }
-
-
-    /*
-       Navigation becomes vertical.
-    */
-
-    .nav-links {
-
-        flex-direction: column;
-
-        align-items: center;
-
-        gap: 8px;
-    }
-
-
-    .nav-links a {
-
-        display: block;
-
-        text-align: center;
-
-        width: 180px;
-    }
-
-
-    /*
-       Hero becomes smaller.
-    */
-
-    .hero {
-
-        padding: 65px 20px;
-    }
-
-
-    .hero h1 {
-
-        font-size: 32px;
-    }
-
-
-    .hero p {
-
-        font-size: 16px;
-    }
-
-
-    .hero h3 {
-
-        font-size: 18px;
-    }
-
-
-    /*
-       Event cards become a single column.
-    */
-
-    .event-container {
-
-        flex-direction: column;
-
-        align-items: center;
-
-        gap: 10px;
-    }
-
-
-    /*
-       IMPORTANT:
-       Switch cards back to border-box on mobile.
-       This prevents the 290px + padding calculation
-       from causing horizontal overflow.
-    */
-
-    .card {
-
-        box-sizing: border-box;
-
-        width: 100%;
-
-        max-width: 350px;
-
-        margin: 10px 0;
-    }
-
-
-    /*
-       Registration form adapts to mobile.
-    */
-
-    .register {
-
-        width: calc(100% - 30px);
-
-        padding: 25px;
-
-        margin: 45px auto;
-    }
-
-
-    .section-title {
-
-        font-size: 27px;
-    }
-
-
-    /*
-       Fixed button moves slightly inward.
-    */
-
-    .help-btn {
-
-        bottom: 15px;
-
-        right: 15px;
-
-        padding: 12px 16px;
-    }
+/* ---------- 10. Responsive ---------- */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-photo-frame { max-width: 420px; }
+  .register-inner { grid-template-columns: 1fr; }
 }
 
-
-/*========================================================
-                15. SMALL MOBILE - 375px
-========================================================*/
-
-
-@media screen and (max-width: 480px) {
-
-    body {
-
-        min-width: 0;
-
-        overflow-x: hidden;
-    }
-
-
-    .hero {
-
-        padding: 55px 15px;
-    }
-
-
-    .hero h1 {
-
-        font-size: 25px;
-    }
-
-
-    .hero p {
-
-        font-size: 15px;
-    }
-
-
-    .hero h3 {
-
-        font-size: 16px;
-
-        margin-bottom: 25px;
-    }
-
-
-    .btn {
-
-        padding: 12px 25px;
-
-        font-size: 15px;
-    }
-
-
-    .events {
-
-        padding: 15px;
-    }
-
-
-    .section-title {
-
-        font-size: 23px;
-
-        letter-spacing: 1px;
-    }
-
-
-    /*
-       100% width + border-box ensures
-       the card fits within a 375px viewport.
-    */
-
-    .card {
-
-        width: 100%;
-
-        max-width: 350px;
-
-        padding: 20px;
-
-        margin: 10px 0;
-    }
-
-
-    .card > h3 {
-
-        font-size: 19px;
-
-        padding-right: 75px;
-    }
-
-
-    .card p {
-
-        font-size: 13.5px;
-    }
-
-
-    .register {
-
-        width: calc(100% - 24px);
-
-        padding: 20px;
-    }
-
-
-    input[type="text"],
-    input[type="email"],
-    select {
-
-        padding: 12px;
-
-        font-size: 14px;
-    }
-
-
-    .submit-btn {
-
-        font-size: 15px;
-    }
-
-
-    .help-btn {
-
-        bottom: 12px;
-
-        right: 12px;
-
-        padding: 11px 15px;
-
-        font-size: 13px;
-    }
-
-
-    footer {
-
-        padding: 30px 15px;
-
-        font-size: 14px;
-    }
-
+@media (max-width: 768px) {
+  .site-nav {
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid rgba(24,20,15,0.08);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .nav-list { flex-direction: column; gap: 0; padding: 8px 24px 20px; }
+  .nav-list > li > a { display: block; padding-block: 12px; }
+
+  .nav-toggle-label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .nav-toggle-label span {
+    width: 24px; height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+  }
+  .nav-toggle:checked ~ .site-nav { max-height: 260px; }
+
+  .card-grid { grid-template-columns: 1fr; }
+  .event-card { width: 100%; }
+
+  .form-shell { grid-template-columns: 1fr; padding: 24px; }
+  .checkbox-grid { grid-template-columns: 1fr; }
+
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
 }
 
-
-/*========================================================
-                    END OF CSS
-========================================================*/
+@media (max-width: 480px) {
+  .wrap { padding-inline: 18px; }
+  .hero-inner { padding-block: 40px 60px; }
+  .hero-actions { flex-direction: column; }
+  .btn { width: 100%; }
+  .help-btn { right: 16px; bottom: 16px; width: 46px; height: 46px; }
+}
