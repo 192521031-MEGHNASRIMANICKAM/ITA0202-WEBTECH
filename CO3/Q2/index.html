@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Student Registration</h2>
+
+<input id="name" placeholder="Student Name">
+<input id="reg" placeholder="Register Number">
+<input id="dept" placeholder="Department">
+
+<button onclick="addStudent()">Add Student</button>
+<button onclick="clearAll()">Clear All</button>
+
+<ul id="list"></ul>
+
+<script>
+function addStudent() {
+    let name = document.getElementById("name").value;
+    let reg = document.getElementById("reg").value;
+    let dept = document.getElementById("dept").value;
+
+    if (!name || !reg || !dept) return;
+
+    let li = document.createElement("li");
+
+    li.textContent = name + " - " + reg + " - " + dept;
+
+    let btn = document.createElement("button");
+    btn.textContent = "Remove";
+
+    btn.onclick = function() {
+        li.remove();
+    };
+
+    li.appendChild(btn);
+    document.getElementById("list").appendChild(li);
+
+    document.getElementById("name").value = "";
+    document.getElementById("reg").value = "";
+    document.getElementById("dept").value = "";
+}
+
+function clearAll() {
+    let list = document.getElementById("list");
+
+    while (list.children.length > 0)
+        list.children[0].remove();
+}
+</script>
+
+</body>
+</html>
