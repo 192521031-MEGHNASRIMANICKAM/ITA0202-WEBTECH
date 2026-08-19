@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2 id="heading">Student Profile</h2>
+
+<p id="profile">Name: Meghna<br>Register No: 101<br>Department: IT</p>
+
+<button onclick="changeHeading()">Change Heading</button>
+<button onclick="changeText()">Change Text Color</button>
+<button onclick="changeBg()">Change Background</button>
+<button onclick="hideShow()">Show / Hide</button>
+
+<script>
+function changeHeading() {
+    document.getElementById("heading").textContent = "My Student Profile";
+}
+
+function changeText() {
+    document.querySelector("#profile").style.color = "blue";
+}
+
+function changeBg() {
+    document.getElementById("profile").style.backgroundColor = "lightyellow";
+}
+
+function hideShow() {
+    document.getElementById("profile").classList.toggle("hide");
+}
+
+document.querySelector("#profile").setAttribute("title", "Student Details");
+</script>
+
+<style>
+.hide {
+    display: none;
+}
+</style>
+
+</body>
+</html>
