@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2 id="title" onclick="this.textContent='Event Registration'">
+    Click This Heading
+</h2>
+
+<form id="form">
+
+    Name:
+    <input id="name" type="text">
+
+    <br><br>
+
+    Event:
+    <select id="event">
+        <option>Workshop</option>
+        <option>Seminar</option>
+        <option>Hackathon</option>
+    </select>
+
+    <br><br>
+
+    <input id="submit" type="submit" value="Register">
+
+</form>
+
+<p id="msg"></p>
+
+<script>
+let name = document.getElementById("name");
+let event = document.getElementById("event");
+let form = document.getElementById("form");
+let msg = document.getElementById("msg");
+
+/* input event */
+name.addEventListener("input", function() {
+    msg.textContent = "Typing: " + name.value;
+});
+
+/* focus and blur */
+name.addEventListener("focus", function() {
+    name.style.backgroundColor = "lightyellow";
+});
+
+name.addEventListener("blur", function() {
+    name.style.backgroundColor = "white";
+});
+
+/* change event */
+event.addEventListener("change", function() {
+    msg.textContent = "Selected: " + event.value;
+});
+
+/* mouseover and mouseout */
+document.getElementById("title").addEventListener("mouseover", function() {
+    this.style.color = "red";
+});
+
+document.getElementById("title").addEventListener("mouseout", function() {
+    this.style.color = "black";
+});
+
+/* submit event */
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    msg.textContent = "Registration Successful!";
+});
+</script>
+
+</body>
+</html>
