@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Browser Information</h2>
+
+<div id="info"></div>
+
+<script>
+function showInfo() {
+
+    document.getElementById("info").innerHTML =
+        "URL: " + window.location.href + "<br>" +
+        "Language: " + navigator.language + "<br>" +
+        "Online: " + navigator.onLine + "<br>" +
+        "Screen Width: " + screen.width + "<br>" +
+        "Screen Height: " + screen.height + "<br>" +
+        "Viewport Width: " + window.innerWidth + "<br>" +
+        "Viewport Height: " + window.innerHeight + "<br>" +
+        "Scroll X: " + window.scrollX + "<br>" +
+        "Scroll Y: " + window.scrollY;
+}
+
+window.addEventListener("resize", showInfo);
+window.addEventListener("scroll", showInfo);
+
+showInfo();
+</script>
+
+</body>
+</html>
