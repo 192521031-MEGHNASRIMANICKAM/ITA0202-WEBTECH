@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+@supports (display: flex) {
+    #box {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+}
+
+@supports not (display: flex) {
+    #box {
+        text-align: center;
+        padding: 20px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Browser Compatibility</h2>
+
+<div id="box">
+    <button onclick="saveData()">Save Name</button>
+</div>
+
+<p id="msg"></p>
+
+<script>
+function saveData() {
+
+    if (typeof Storage !== "undefined") {
+
+        localStorage.setItem("name", "Meghna");
+
+        document.getElementById("msg").textContent =
+            "localStorage is supported.";
+    }
+    else {
+        document.getElementById("msg").textContent =
+            "localStorage is not supported.";
+    }
+}
+
+/* querySelector feature detection */
+
+if (document.querySelector) {
+    console.log("querySelector supported");
+} else {
+    console.log("querySelector not supported");
+}
+</script>
+
+</body>
+</html>
