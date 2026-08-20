@@ -1,59 +1,202 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Cross-Browser Compatible Webpage</title>
 
-<style>
-@supports (display: flex) {
-    #box {
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-    }
-}
+    <style>
+        body {
+            font-family: Arial;
+            background: #eeeeee;
+            text-align: center;
+            padding: 30px;
+        }
 
-@supports not (display: flex) {
-    #box {
-        text-align: center;
-        padding: 20px;
-    }
-}
-</style>
+        .container {
+            width: 500px;
+            margin: auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+        }
 
+        #box {
+            padding: 20px;
+            margin: 20px;
+            background: lightblue;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        /* Feature detection for CSS */
+        @supports (display: flex) {
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Fallback for browsers without flexbox */
+        @supports not (display: flex) {
+            .container {
+                display: block;
+            }
+        }
+
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
 
-<h2>Browser Compatibility</h2>
+<div class="container">
 
-<div id="box">
-    <button onclick="saveData()">Save Name</button>
+    <h2>Cross-Browser Compatible Webpage</h2>
+
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <br><br>
+
+    <button id="saveBtn">Save Name</button>
+    <button id="showBtn">Show Name</button>
+
+    <div id="box">
+        Welcome!
+    </div>
+
+    <p id="status"></p>
+
 </div>
 
-<p id="msg"></p>
 
 <script>
-function saveData() {
 
-    if (typeof Storage !== "undefined") {
+    /* ---------------------------------
+       1. Check querySelector() support
+       --------------------------------- */
 
-        localStorage.setItem("name", "Meghna");
+    var status;
 
-        document.getElementById("msg").textContent =
-            "localStorage is supported.";
+    if (document.querySelector) {
+
+        status = document.querySelector("#status");
+
+    } else {
+
+        // Fallback for old browsers
+        status = document.getElementById("status");
     }
-    else {
-        document.getElementById("msg").textContent =
-            "localStorage is not supported.";
+
+
+    /* ---------------------------------
+       2. Check localStorage support
+       --------------------------------- */
+
+    var storageSupported = false;
+
+    try {
+
+        if (typeof localStorage !== "undefined") {
+
+            localStorage.setItem("test", "1");
+            localStorage.removeItem("test");
+
+            storageSupported = true;
+        }
+
+    } catch (e) {
+
+        storageSupported = false;
     }
-}
 
-/* querySelector feature detection */
 
-if (document.querySelector) {
-    console.log("querySelector supported");
-} else {
-    console.log("querySelector not supported");
-}
+    /* ---------------------------------
+       3. Display browser support
+       --------------------------------- */
+
+    if (storageSupported) {
+
+        status.textContent =
+            "Your browser supports localStorage.";
+
+        status.className = "success";
+
+    } else {
+
+        status.textContent =
+            "localStorage is not supported. Using fallback.";
+
+        status.className = "warning";
+    }
+
+
+    /* ---------------------------------
+       4. Save Name
+       --------------------------------- */
+
+    document.getElementById("saveBtn").onclick = function() {
+
+        var name = document.getElementById("name").value;
+
+        if (storageSupported) {
+
+            localStorage.setItem("studentName", name);
+
+            document.getElementById("box").textContent =
+                "Name saved successfully!";
+
+        } else {
+
+            // Fallback: display directly on page
+            document.getElementById("box").textContent =
+                "Name: " + name;
+        }
+    };
+
+
+    /* ---------------------------------
+       5. Show saved Name
+       --------------------------------- */
+
+    document.getElementById("showBtn").onclick = function() {
+
+        var name;
+
+        if (storageSupported) {
+
+            name = localStorage.getItem("studentName");
+
+            if (name) {
+
+                document.getElementById("box").textContent =
+                    "Saved Name: " + name;
+
+            } else {
+
+                document.getElementById("box").textContent =
+                    "No name has been saved.";
+            }
+
+        } else {
+
+            // Fallback for browsers without localStorage
+            document.getElementById("box").textContent =
+                "localStorage unavailable. Please enter your name again.";
+        }
+    };
+
 </script>
 
 </body>
