@@ -1,23 +1,78 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Student Result</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+
+        .form {
+            width: 450px;
+            margin: 30px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 12px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+    </style>
+</head>
+
 <body>
 
-<h2>Student Result</h2>
+<div class="form">
 
-<form action="result" method="post">
+    <h2>Student Result</h2>
 
-Name: <input name="name"><br><br>
-Register Number: <input name="reg"><br><br>
+    <form action="result" method="post">
 
-Subject 1: <input name="m1"><br><br>
-Subject 2: <input name="m2"><br><br>
-Subject 3: <input name="m3"><br><br>
-Subject 4: <input name="m4"><br><br>
-Subject 5: <input name="m5"><br><br>
+        Student Name:
+        <input type="text" name="name">
 
-<input type="submit" value="Calculate">
+        Register Number:
+        <input type="text" name="regno">
 
-</form>
+        Subject 1:
+        <input type="text" name="m1">
+
+        Subject 2:
+        <input type="text" name="m2">
+
+        Subject 3:
+        <input type="text" name="m3">
+
+        Subject 4:
+        <input type="text" name="m4">
+
+        Subject 5:
+        <input type="text" name="m5">
+
+        <input type="submit" value="Calculate Result">
+
+    </form>
+
+</div>
 
 </body>
 </html>
