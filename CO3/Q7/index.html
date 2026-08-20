@@ -1,24 +1,87 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Student Registration</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+        }
+
+        .form {
+            width: 400px;
+            margin: 50px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 15px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background: green;
+            color: white;
+            border: none;
+            padding: 10px;
+        }
+    </style>
+</head>
+
 <body>
 
-<h2>Student Registration</h2>
+<div class="form">
 
-<form action="register" method="post">
+    <h2>Student Registration</h2>
 
-Name: <input name="name"><br><br>
+    <form action="register" method="post">
 
-Register Number: <input name="reg"><br><br>
+        Student Name:
+        <input type="text" name="name">
 
-Email: <input name="email" type="email"><br><br>
+        Register Number:
+        <input type="text" name="regno">
 
-Department: <input name="dept"><br><br>
+        Email:
+        <input type="email" name="email">
 
-Semester: <input name="sem"><br><br>
+        Department:
+        <select name="department">
+            <option value="">Select Department</option>
+            <option>Information Technology</option>
+            <option>Computer Science</option>
+            <option>ECE</option>
+            <option>EEE</option>
+        </select>
 
-<input type="submit" value="Register">
+        Semester:
+        <select name="semester">
+            <option value="">Select Semester</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+        </select>
 
-</form>
+        <input type="submit" value="Register">
+
+    </form>
+
+</div>
 
 </body>
 </html>
