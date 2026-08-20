@@ -1,41 +1,125 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Student Profile</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        #profile {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: lightblue;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
 <body>
 
-<h2 id="heading">Student Profile</h2>
+<div class="container">
 
-<p id="profile">Name: Meghna<br>Register No: 101<br>Department: IT</p>
+    <h2>DOM-Based Student Profile</h2>
 
-<button onclick="changeHeading()">Change Heading</button>
-<button onclick="changeText()">Change Text Color</button>
-<button onclick="changeBg()">Change Background</button>
-<button onclick="hideShow()">Show / Hide</button>
+    <input type="text" id="headingInput"
+           placeholder="Enter new heading">
+
+    <br><br>
+
+    <button onclick="changeHeading()">Change Heading</button>
+
+    <button onclick="changeTextColor()">Change Text Colour</button>
+
+    <button onclick="changeBackground()">Change Background</button>
+
+    <button onclick="toggleProfile()">Show / Hide Profile</button>
+
+    <div id="profile">
+
+        <h3 id="profileHeading">Student Profile</h3>
+
+        <p id="studentName">Name: Meghna</p>
+
+        <p id="studentReg">Register Number: 101</p>
+
+        <p id="studentDept">Department: Information Technology</p>
+
+        <p id="studentYear">Year: 2nd Year</p>
+
+    </div>
+
+</div>
+
 
 <script>
-function changeHeading() {
-    document.getElementById("heading").textContent = "My Student Profile";
-}
 
-function changeText() {
-    document.querySelector("#profile").style.color = "blue";
-}
+    // Change Heading using getElementById() and textContent
+    function changeHeading() {
 
-function changeBg() {
-    document.getElementById("profile").style.backgroundColor = "lightyellow";
-}
+        let newHeading = document.getElementById("headingInput").value;
 
-function hideShow() {
-    document.getElementById("profile").classList.toggle("hide");
-}
+        document.getElementById("profileHeading").textContent = newHeading;
+    }
 
-document.querySelector("#profile").setAttribute("title", "Student Details");
+
+    // Change text colour using querySelector() and style
+    function changeTextColor() {
+
+        let profile = document.querySelector("#profile");
+
+        profile.style.color = "blue";
+    }
+
+
+    // Change background colour using style
+    function changeBackground() {
+
+        let profile = document.getElementById("profile");
+
+        profile.style.backgroundColor = "lightgreen";
+    }
+
+
+    // Show / Hide profile using classList
+    function toggleProfile() {
+
+        let profile = document.getElementById("profile");
+
+        profile.classList.toggle("hidden");
+    }
+
+
+    // setAttribute() example
+    document.getElementById("profile").setAttribute("title",
+        "Student Profile Details");
+
 </script>
-
-<style>
-.hide {
-    display: none;
-}
-</style>
 
 </body>
 </html>
