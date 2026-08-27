@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive XPath &amp; XSLT Explorer</title>
+<style>
+  :root{
+    --bg:#0f1117; --panel:#171a23; --border:#2a2f3d;
+    --text:#e6e8ef; --muted:#9aa1b2; --accent:#5fb3ff;
+    --ok:#4ade80; --warn:#f0c674; --code-bg:#11141c;
+    --hl:#2d4a2d;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,Segoe UI,Roboto,sans-serif;
+    padding:20px; line-height:1.5;
+  }
+  h1{font-size:19px; margin:0 0 4px}
+  .sub{color:var(--muted); font-size:13px; margin-bottom:18px}
+  .layout{display:grid; grid-template-columns:340px 1fr; gap:16px}
+  @media (max-width:900px){ .layout{grid-template-columns:1fr} }
+
+  section{
+    background:var(--panel); border:1px solid var(--border);
+    border-radius:8px; padding:16px 18px; margin-bottom:16px;
+  }
+  h2{font-size:14px; margin:0 0 10px; color:var(--accent)}
+
+  /* Query picker list */
+  .qlist{list-style:none; margin:0; padding:0}
+  .qitem{
+    padding:9px 10px; border-radius:6px; cursor:pointer;
+    font-size:13px; margin-bottom:4px; border:1px solid transparent;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .qitem:hover{background:#1d2233}
+  .qitem.active{background:#1d3a52; border-color:var(--accent); color:#cfe8ff}
+  .qtag{
+    font-size:10px; color:var(--muted); background:#20242f;
+    padding:2px 6px; border-radius:4px; margin-right:8px;
+  }
+
+  /* Custom query box */
+  .custom-row{display:flex; gap:8px; margin-top:10px}
+  input[type=text]{
+    flex:1; background:var(--code-bg); border:1px solid var(--border);
+    color:var(--text); border-radius:6px; padding:8px 10px;
+    font-family:Consolas,Menlo,monospace; font-size:12.5px;
+  }
+  button{
+    background:var(--accent); color:#0f1117; border:none;
+    padding:8px 14px; border-radius:6px; font-weight:600;
+    font-size:12.5px; cursor:pointer; white-space:nowrap;
+  }
+  button:hover{opacity:.9}
+  button.secondary{background:#2a2f3d; color:var(--text)}
+
+  /* Result panel */
+  .expr-display{
+    font-family:Consolas,Menlo,monospace; font-size:13px;
+    color:var(--warn); background:var(--code-bg); padding:8px 10px;
+    border-radius:6px; margin-bottom:10px; word-break:break-all;
+  }
+  .result-count{font-size:12px; color:var(--muted); margin-bottom:10px}
+
+  /* Data table with highlight */
+  table{border-collapse:collapse; width:100%; font-size:12.5px}
+  th,td{border:1px solid var(--border); padding:6px 9px; text-align:left}
+  th{background:#1d2233; color:var(--muted); font-weight:600}
+  tr.match{background:var(--hl)}
+  tr.match td:first-child{border-left:3px solid var(--ok)}
+
+  .empty-state{color:var(--muted); font-size:13px; padding:20px 0; text-align:center}
+
+  #xslt-frame{
+    width:100%; height:220px; border:1px solid var(--border);
+    border-radius:6px; background:#fff;
+  }
+</style>
+</head>
+<body>
+
+<h1>Interactive XPath &amp; XSLT Explorer</h1>
+<div class="sub">Click any query on the left — the matching data highlights live in the table on the right. Runs natively via <code>document.evaluate()</code>, no library.</div>
+
+<div class="layout">
+
+  <!-- LEFT: query picker -->
+  <section>
+    <h2>Select a Query (Q2 a–j)</h2>
+    <ul class="qlist" id="qlist"></ul>
+
+    <h2 style="margin-top:16px">Or write your own</h2>
+    <div class="custom-row">
+      <input type="text" id="customXPath" placeholder="/courses/course[credits=3]">
+      <button onclick="runCustom()">Run</button>
+    </div>
+  </section>
+
+  <!-- RIGHT: result -->
+  <section>
+    <h2>Result</h2>
+    <div class="expr-display" id="exprDisplay">Select a query on the left to begin.</div>
+    <div class="result-count" id="resultCount"></div>
+    <div id="tableWrap"></div>
+  </section>
+
+</div>
+
+<!-- XSLT section -->
+<section>
+  <h2>XSLT Transformation (Q3)</h2>
+  <button onclick="runXSLT()">Run XSLT transform</button>
+  <div style="margin-top:10px"><iframe id="xslt-frame"></iframe></div>
+</section>
+
+<script>
+const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
+<courses>
+<course id="C101"><code>WEB301</code><name>Web Technology</name><faculty>Dr. Arun</faculty><students>58</students><credits>4</credits><type>Theory</type></course>
+<course id="C102"><code>AI302</code><name>Artificial Intelligence</name><faculty>Dr. Meena</faculty><students>72</students><credits>4</credits><type>Theory</type></course>
+<course id="C103"><code>WEB303</code><name>Web Technology Laboratory</name><faculty>Dr. Ravi</faculty><students>36</students><credits>2</credits><type>Practical</type></course>
+<course id="C104"><code>ML304</code><name>Machine Learning</name><faculty>Dr. Priya</faculty><students>64</students><credits>4</credits><type>Theory</type></course>
+<course id="C105"><code>DB305</code><name>Database Systems</name><faculty>Dr. Kumar</faculty><students>42</students><credits>3</credits><type>Theory</type></course>
+</courses>`;
+
+const parser = new DOMParser();
+const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+
+// full data set, for rendering the reference table
+const allCourses = Array.from(xmlDoc.getElementsByTagName("course")).map(c => ({
+  id: c.getAttribute("id"),
+  code: c.querySelector("code").textContent,
+  name: c.querySelector("name").textContent,
+  faculty: c.querySelector("faculty").textContent,
+  students: c.querySelector("students").textContent,
+  credits: c.querySelector("credits").textContent,
+  type: c.querySelector("type").textContent,
+}));
+
+// predefined queries — each returns the <course> node-set that should be highlighted
+const queries = [
+  { tag:"a", label:"All course records",                    expr:"/courses/course" },
+  { tag:"b", label:"Names of all courses",                  expr:"/courses/course/name",  base:"/courses/course[name]" },
+  { tag:"c", label:"Students > 50",                          expr:"/courses/course[students > 50]" },
+  { tag:"d", label:"4 credits",                               expr:"/courses/course[credits = 4]" },
+  { tag:"e", label:"Type = Theory",                           expr:"/courses/course[type='Theory']" },
+  { tag:"f", label:"Theory & students > 50",                  expr:"/courses/course[type='Theory' and students>50]" },
+  { tag:"g", label:"Faculty, credits >= 4",                   expr:"/courses/course[credits>=4]" },
+  { tag:"h", label:"id = C104",                               expr:"/courses/course[@id='C104']" },
+  { tag:"i", label:"First course",                            expr:"/courses/course[1]" },
+  { tag:"j", label:"Last course",                             expr:"/courses/course[last()]" },
+];
+
+// build the left-hand list
+const qlistEl = document.getElementById('qlist');
+queries.forEach((q, idx) => {
+  const li = document.createElement('li');
+  li.className = 'qitem';
+  li.id = 'q-' + idx;
+  li.innerHTML = `<span><span class="qtag">${q.tag}</span>${q.label}</span>`;
+  li.onclick = () => selectQuery(idx);
+  qlistEl.appendChild(li);
+});
+
+function highlightIdsForExpr(expr){
+  // Always resolve to the matching <course> nodes (even if expr drills into a child)
+  // so we can highlight full rows in the reference table.
+  let courseExpr = expr;
+  if (!expr.trim().endsWith("course") && !expr.includes("course[")){
+    // fallback: just find course ancestors of whatever matched
+  }
+  const result = xmlDoc.evaluate(expr, xmlDoc, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+  const ids = new Set();
+  for (let i=0;i<result.snapshotLength;i++){
+    let node = result.snapshotItem(i);
+    // walk up to nearest <course> ancestor (or itself if it already is one)
+    while(node && node.nodeType===1 && node.tagName!=='course'){
+      node = node.parentNode;
+    }
+    if(node && node.tagName==='course') ids.add(node.getAttribute('id'));
+  }
+  return { ids, count: result.snapshotLength, snapshot: result };
+}
+
+function renderTable(highlightIds){
+  let html = `<table><tr>
+    <th>ID</th><th>Code</th><th>Name</th><th>Faculty</th><th>Students</th><th>Credits</th><th>Type</th>
+  </tr>`;
+  allCourses.forEach(c => {
+    const isMatch = highlightIds.has(c.id);
+    html += `<tr class="${isMatch ? 'match' : ''}">
+      <td>${c.id}</td><td>${c.code}</td><td>${c.name}</td><td>${c.faculty}</td>
+      <td>${c.students}</td><td>${c.credits}</td><td>${c.type}</td>
+    </tr>`;
+  });
+  html += `</table>`;
+  document.getElementById('tableWrap').innerHTML = html;
+}
+
+function selectQuery(idx){
+  document.querySelectorAll('.qitem').forEach(el => el.classList.remove('active'));
+  document.getElementById('q-' + idx).classList.add('active');
+
+  const q = queries[idx];
+  document.getElementById('exprDisplay').textContent = q.expr;
+
+  const { ids, count } = highlightIdsForExpr(q.expr);
+  document.getElementById('resultCount').textContent =
+    `${count} node(s) matched → ${ids.size} course row(s) highlighted below`;
+  renderTable(ids);
+}
+
+function runCustom(){
+  const expr = document.getElementById('customXPath').value.trim();
+  if(!expr) return;
+  try{
+    document.getElementById('exprDisplay').textContent = expr;
+    document.querySelectorAll('.qitem').forEach(el => el.classList.remove('active'));
+    const { ids, count } = highlightIdsForExpr(expr);
+    document.getElementById('resultCount').textContent =
+      `${count} node(s) matched → ${ids.size} course row(s) highlighted below`;
+    renderTable(ids);
+  }catch(e){
+    document.getElementById('resultCount').textContent = "Invalid XPath: " + e.message;
+    document.getElementById('tableWrap').innerHTML = '<div class="empty-state">—</div>';
+  }
+}
+
+// XSLT
+const xsltString = `<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html" indent="yes"/>
+<xsl:template match="/courses">
+<html><head><title>High Enrollment Courses</title></head>
+<body>
+<h2>High Enrollment Courses</h2>
+<table border="1" cellpadding="5" cellspacing="0">
+<tr><th>Course Code</th><th>Course Name</th><th>Faculty</th><th>Students</th><th>Credits</th><th>Type</th></tr>
+<xsl:for-each select="course[students &gt; 30]">
+<xsl:sort select="students" order="descending" data-type="number"/>
+<tr>
+<td><xsl:value-of select="code"/></td>
+<td><xsl:value-of select="name"/></td>
+<td><xsl:value-of select="faculty"/></td>
+<td><xsl:value-of select="students"/></td>
+<td><xsl:value-of select="credits"/></td>
+<td><xsl:value-of select="type"/></td>
+</tr>
+</xsl:for-each>
+</table>
+</body></html>
+</xsl:template>
+</xsl:stylesheet>`;
+
+function runXSLT(){
+  const xsltDoc = parser.parseFromString(xsltString, "application/xml");
+  const processor = new XSLTProcessor();
+  processor.importStylesheet(xsltDoc);
+  const resultDoc = processor.transformToDocument(xmlDoc);
+  const html = new XMLSerializer().serializeToString(resultDoc);
+  document.getElementById('xslt-frame').srcdoc = html;
+}
+
+// initial state
+renderTable(new Set());
+runXSLT();
+</script>
+</body>
+</html>
