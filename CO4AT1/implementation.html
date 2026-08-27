@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>XPath &amp; XSLT Implementation — University Course Enrollment</title>
+<style>
+  :root{
+    --bg:#0f1117; --panel:#171a23; --border:#2a2f3d;
+    --text:#e6e8ef; --muted:#9aa1b2; --accent:#5fb3ff;
+    --ok:#4ade80; --code-bg:#11141c;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,Segoe UI,Roboto,sans-serif;
+    padding:24px; line-height:1.5;
+  }
+  h1{font-size:20px; margin:0 0 4px}
+  .sub{color:var(--muted); font-size:13px; margin-bottom:20px}
+  section{
+    background:var(--panel); border:1px solid var(--border);
+    border-radius:8px; padding:18px 20px; margin-bottom:18px;
+  }
+  h2{font-size:15px; margin:0 0 12px; color:var(--accent)}
+  h3{font-size:13px; margin:14px 0 6px; color:var(--text)}
+  pre{
+    background:var(--code-bg); border:1px solid var(--border);
+    border-radius:6px; padding:10px 12px; overflow-x:auto;
+    font-size:12.5px; margin:0 0 10px;
+  }
+  code{font-family:Consolas,Menlo,monospace}
+  .xpath-block{
+    border-top:1px solid var(--border); padding:10px 0;
+  }
+  .xpath-block:first-child{border-top:none; padding-top:0}
+  .label{font-size:12px; color:var(--muted); margin-bottom:2px}
+  .expr{font-family:Consolas,Menlo,monospace; font-size:13px; color:#f0c674}
+  .result{
+    margin-top:6px; padding:8px 10px; background:var(--code-bg);
+    border-radius:5px; font-size:12.5px; color:var(--ok);
+    white-space:pre-wrap;
+  }
+  table{border-collapse:collapse; width:100%; font-size:13px; margin-top:8px}
+  th,td{border:1px solid var(--border); padding:6px 10px; text-align:left}
+  th{background:#1d2233}
+  #xslt-output-frame{
+    width:100%; height:230px; border:1px solid var(--border);
+    border-radius:6px; background:#fff;
+  }
+  .btn{
+    background:var(--accent); color:#0f1117; border:none;
+    padding:7px 14px; border-radius:5px; font-weight:600;
+    font-size:13px; cursor:pointer; margin-bottom:12px;
+  }
+  .btn:hover{opacity:.9}
+</style>
+</head>
+<body>
+
+<h1>University Course Enrollment — XPath &amp; XSLT Implementation</h1>
+<div class="sub">Runs entirely in-browser using native <code>DOMParser</code>, <code>document.evaluate()</code>, and <code>XSLTProcessor</code> — no server, no libraries.</div>
+
+<!-- ============ SOURCE XML ============ -->
+<section>
+  <h2>1. Source XML (embedded, parsed at load time)</h2>
+  <pre id="xml-source"></pre>
+</section>
+
+<!-- ============ XPATH RESULTS ============ -->
+<section>
+  <h2>2. XPath Queries — Q2 (a–j)</h2>
+  <button class="btn" onclick="runAllXPath()">Run all XPath queries</button>
+  <div id="xpath-results"></div>
+</section>
+
+<!-- ============ XSLT OUTPUT ============ -->
+<section>
+  <h2>3. XSLT Transformation — Q3</h2>
+  <button class="btn" onclick="runXSLT()">Run XSLT transform</button>
+  <div class="label">Rendered output (live HTML produced by the transform):</div>
+  <iframe id="xslt-output-frame"></iframe>
+</section>
+
+<script>
+const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
+<courses>
+<course id="C101">
+<code>WEB301</code>
+<name>Web Technology</name>
+<faculty>Dr. Arun</faculty>
+<students>58</students>
+<credits>4</credits>
+<type>Theory</type>
+</course>
+<course id="C102">
+<code>AI302</code>
+<name>Artificial Intelligence</name>
+<faculty>Dr. Meena</faculty>
+<students>72</students>
+<credits>4</credits>
+<type>Theory</type>
+</course>
+<course id="C103">
+<code>WEB303</code>
+<name>Web Technology Laboratory</name>
+<faculty>Dr. Ravi</faculty>
+<students>36</students>
+<credits>2</credits>
+<type>Practical</type>
+</course>
+<course id="C104">
+<code>ML304</code>
+<name>Machine Learning</name>
+<faculty>Dr. Priya</faculty>
+<students>64</students>
+<credits>4</credits>
+<type>Theory</type>
+</course>
+<course id="C105">
+<code>DB305</code>
+<name>Database Systems</name>
+<faculty>Dr. Kumar</faculty>
+<students>42</students>
+<credits>3</credits>
+<type>Theory</type>
+</course>
+</courses>`;
+
+document.getElementById('xml-source').textContent = xmlString;
+
+const parser = new DOMParser();
+const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+
+// ---- XPath queries (Q2 a-j) ----
+const queries = [
+  { label: "a. All course records",                         expr: "/courses/course",                                             type: "nodeset", show: n => n.getAttribute('id') },
+  { label: "b. Names of all courses",                        expr: "/courses/course/name",                                        type: "nodeset", show: n => n.textContent },
+  { label: "c. Courses with more than 50 students",          expr: "/courses/course[students > 50]/code",                         type: "nodeset", show: n => n.textContent },
+  { label: "d. Courses carrying 4 credits",                  expr: "/courses/course[credits = 4]/code",                           type: "nodeset", show: n => n.textContent },
+  { label: "e. Courses of type Theory",                      expr: "/courses/course[type = 'Theory']/code",                       type: "nodeset", show: n => n.textContent },
+  { label: "f. Theory course names with > 50 students",      expr: "/courses/course[type='Theory' and students>50]/name",         type: "nodeset", show: n => n.textContent },
+  { label: "g. Faculty of courses with >= 4 credits",        expr: "/courses/course[credits >= 4]/faculty",                       type: "nodeset", show: n => n.textContent },
+  { label: "h. Course with id C104",                         expr: "/courses/course[@id='C104']/name",                            type: "nodeset", show: n => n.textContent },
+  { label: "i. First course in the document",                expr: "/courses/course[1]/name",                                     type: "nodeset", show: n => n.textContent },
+  { label: "j. Last course in the document",                 expr: "/courses/course[last()]/name",                                type: "nodeset", show: n => n.textContent },
+];
+
+function runAllXPath(){
+  const container = document.getElementById('xpath-results');
+  container.innerHTML = "";
+  queries.forEach(q => {
+    const result = xmlDoc.evaluate(q.expr, xmlDoc, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    let items = [];
+    for (let i = 0; i < result.snapshotLength; i++){
+      items.push(q.show(result.snapshotItem(i)));
+    }
+    const block = document.createElement('div');
+    block.className = 'xpath-block';
+    block.innerHTML = `
+      <div class="label">${q.label}</div>
+      <div class="expr">${q.expr}</div>
+      <div class="result">→ ${items.length ? items.join(", ") : "(no matches)"}</div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+// ---- XSLT (Q3) ----
+const xsltString = `<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html" indent="yes"/>
+<xsl:template match="/courses">
+<html><head><title>High Enrollment Courses</title></head>
+<body>
+<h2>High Enrollment Courses</h2>
+<table border="1" cellpadding="5" cellspacing="0">
+<tr><th>Course Code</th><th>Course Name</th><th>Faculty</th><th>Students</th><th>Credits</th><th>Type</th></tr>
+<xsl:for-each select="course[students &gt; 40]">
+<xsl:sort select="students" order="descending" data-type="number"/>
+<tr>
+<td><xsl:value-of select="code"/></td>
+<td><xsl:value-of select="name"/></td>
+<td><xsl:value-of select="faculty"/></td>
+<td><xsl:value-of select="students"/></td>
+<td><xsl:value-of select="credits"/></td>
+<td><xsl:value-of select="type"/></td>
+</tr>
+</xsl:for-each>
+</table>
+</body></html>
+</xsl:template>
+</xsl:stylesheet>`;
+
+function runXSLT(){
+  const xsltDoc = parser.parseFromString(xsltString, "application/xml");
+  const processor = new XSLTProcessor();
+  processor.importStylesheet(xsltDoc);
+  const resultDoc = processor.transformToDocument(xmlDoc);
+  const html = new XMLSerializer().serializeToString(resultDoc);
+  const frame = document.getElementById('xslt-output-frame');
+  frame.srcdoc = html;
+}
+
+// auto-run once on load
+runAllXPath();
+runXSLT();
+</script>
+</body>
+</html>
